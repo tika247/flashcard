@@ -1,0 +1,8 @@
+'dist/**/*.+(htm|html|shtml)':
+    - vlint
+'dist/**/*.css':
+    - vlint --css
+'dist/**/*.scss':
+    - stylelint
+'src/**/*.ts':
+    - eslint
