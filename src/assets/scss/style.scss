@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+/* A Modern CSS Reset */
+*,*::before,*::after{box-sizing:border-box}body,h1,h2,h3,h4,p,figure,blockquote,dl,dd{margin:0}ul[role="list"],ol[role="list"]{list-style:none}html:focus-within{scroll-behavior:smooth}body{min-height:100vh;text-rendering:optimizeSpeed;line-height:1.5}a:not([class]){text-decoration-skip-ink:auto}img,picture{max-width:100%;display:block}input,button,textarea,select{font:inherit}@media(prefers-reduced-motion:reduce){html:focus-within{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}}
+
+$breakPoint: 768;
+
+$color-01: #395B64;
+$color-02: #4AAD5B;
+$color-03: #E7F6F2;
+
+$text-color: #333;
+
+$shadow: -8px -8px 16px #356671,
+      8px 8px 16px #234149;
+
+$ff: "Roboto",
+    "Helvetica Neue",
+    Arial,
+    "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans",
+    Meiryo,
+    sans-serif;
+
+html {
+  font-family: $ff;
+  color: #333;
+  word-wrap: break-word;
+  line-height: 1.5;
+  letter-spacing: .07em;
+  font-size: 100%;
+}
+body {
+  background-color: $color-01;
+}
+a {
+  text-decoration: none;
+}
+ul,li{
+    list-style:none;
+}

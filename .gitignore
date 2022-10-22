@@ -1,27 +1,23 @@
-# このファイルを有効にするにはファイル名を「.gitignore」にしてください
-
-# 特定の拡張子を無視する場合はどこにも/を付けない
-*.psd
-*.xd
-*.ai
-*.css.map
-*.DS_Store
-
-# 特定のファイルを無視する場合は先頭に/を付ける
-prepros.cfg
-prepros-6.config
-
-# ディレクトリ配下（のすべてのパスを）除外する
-node_modules/
-.sass-cache/
-__MACOSX/
-docs/
-_styleguide/
-styleguide/
-_memo/
-_design/
+.DS_Store
+node_modules
+/dist
 
 
-# 例外ファイルの指定はワイルドカードで無視してから例外指定する
-# /tmp/*
-# !/tmp/.gitkeep
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
