@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="29" height="47.533" viewBox="0 0 29 47.533">
+  <g id="next-icon" transform="translate(2.919 -0.151)">
+    <text id="Next" transform="translate(-2.919 43.685)" fill="#e7f6f2" font-size="14" font-family="Roboto-Regular, Roboto"><tspan x="0" y="0">Next</tspan></text>
+    <g id="next-2" data-name="next" transform="translate(-0.919 -0.849)">
+      <g id="icon" transform="translate(-1)">
+        <path id="パス_58" data-name="パス 58" d="M125.172,131.775h-3.392l-.652-.005.005.005h-.012l2.8,2.927,1.9,2h-9.474v2.99h5.642l3.835.006-2.787,2.912-1.916,1.994h.008l-.008.008,4.053,0,6.14-6.418Z" transform="translate(-109.344 -123.77)" fill="#fff"/>
+        <path id="パス_59" data-name="パス 59" d="M26,53.833V45.952H24.087V67.667a.454.454,0,0,1-.454.454H2.372a.455.455,0,0,1-.459-.454V46.406a.458.458,0,0,1,.459-.454H24.087l.1-1.9L1.8,44.039a1.768,1.768,0,0,0-1.272.531A1.789,1.789,0,0,0,0,45.842V68.231a1.8,1.8,0,0,0,1.8,1.808H24.2a1.832,1.832,0,0,0,1.277-.526A1.8,1.8,0,0,0,26,68.231Z" transform="translate(1 -43.039)" fill="#fff"/>
+        <path id="パス_60" data-name="パス 60" d="M3.847,11l-1.509-.58a.444.444,0,0,1-.425-.473V8.473H.005L0,10.51a1.8,1.8,0,0,0,1.8,1.806l2.044-.6Z" transform="translate(27 13.33) rotate(180)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>
