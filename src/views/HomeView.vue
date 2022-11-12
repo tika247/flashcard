@@ -1,8 +1,8 @@
 <template>
-  <div class="layout">
+  <div class="home-lyt">
     <h1>FLASH CARD APP</h1>
     <thunderA></thunderA>
-    <ul class="panel-list">
+    <ul class="home-panel-list">
       <li class="panel">
         <router-link to="/list">
           List
@@ -35,45 +35,51 @@ defineComponent({
 });
 </script>
 
-<style lang="scss">
-.layout {
+<style lang="scss" scoped>
+.home-lyt {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 96px 0;
+  gap: $distance-01 0;
 }
 
 h1 {
-  font-size: 7.2rem;
+  font-size: $fontSize-01;
   color: #fff;
   text-align: center;
 }
 
-.panel-list {
+.home-panel-list {
   display: flex;
   justify-content: center;
   gap: 0 80px;
-}
-.panel a {
-  position: relative;
-  width: 320px;
-  height: 320px;
-  background-color: $color-01;
-  font-size: 4rem;
-  color: #fff;
-  font-weight: 500;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: $shadow;
-}
-.panel__bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+
+  .panel {
+    a {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      background-color: $color-01;
+      font-size: $fontSize-02;
+      color: #fff;
+      font-weight: 500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: $shadow;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    &__bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 </style>

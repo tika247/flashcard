@@ -1,6 +1,6 @@
 <template>
   <svg xmlns="http://www.w3.org/2000/svg" class="thunderA">
-    <symbol viewBox="0 0 304 304" id="thunderA">
+    <symbol id="thunderA">
       <g>
         <path
           d="M441.086,390V564.881l97.353-78.4-33.852-36.153L579.894,390Z"

@@ -1,3 +1,5 @@
 ## todo
 
-- setting vue compiler
+- loop words
+- footer
+- scrollBar of overflow:scroll
