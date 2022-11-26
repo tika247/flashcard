@@ -2,7 +2,6 @@ import { createApp, ref, Ref } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import globalProps from "./store/globalProps";
-import { WordType } from "@/@type/type";
 import axios from "axios";
 const URL = "/api/api.json";
 const word: Ref<Array<WordType> | null> = ref(null);

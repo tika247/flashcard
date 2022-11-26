@@ -37,7 +37,6 @@
 
 <script setup lang="ts">
 import { defineProps, Ref, ref } from "vue";
-import { WordType } from "@/@type/type";
 
 const props = defineProps({
   data: Object,
@@ -47,7 +46,6 @@ const isClicked: Ref<boolean> = ref(false);
 
 const getKeyValue = (obj: WordType) => {
   const pair = Object.entries(obj);
-  console.log(pair);
 
   return pair;
 };

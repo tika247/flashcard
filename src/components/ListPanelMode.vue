@@ -20,7 +20,6 @@ import { defineComponent, inject, Ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/scrollbar";
-import { WordType } from "@/@type/type";
 import PanelCardB from "../components/PanelCardB.vue";
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 

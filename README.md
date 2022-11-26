@@ -1,5 +1,9 @@
 # flashcard
 
+## Development ENVIRONMENT
+
+See [ENVIRONMENT.md](./md/ENVIRONMENT.md).
+
 ## Project setup
 ```
 npm install

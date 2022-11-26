@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 
-const globalProps = reactive({
-  $sample: "sample",
+const globalProps: GlobalPropsType = reactive({
+  $isModal: false,
 });
 
 export default globalProps;

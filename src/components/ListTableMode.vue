@@ -27,7 +27,6 @@
 <script setup lang="ts">
 import ListWord from "./ListWord.vue";
 import { defineComponent, inject, ref, Ref } from "vue";
-import { WordType } from "@/@type/type";
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
 defineComponent({

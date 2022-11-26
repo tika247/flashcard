@@ -190,6 +190,18 @@ button {
   appearance: none;
 }
 
+dialog {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+  
+  &:modal {
+    max-width: inherit;
+    max-height: inherit;
+  }
+}
+
 #app {
   overflow-x: hidden;
 }

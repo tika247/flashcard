@@ -3,13 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "run-p serve:*",
+    "serve:front": "vue-cli-service serve",
+    "serve:back": "npm run server",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint --fix"
+    "lint": "vue-cli-service lint --fix",
+    "server": "node server/server.mjs",
+    "start": "run-s start:*",
+    "start:setup": "npm ci",
+    "start:execution": "npm run server"
   },
   "dependencies": {
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",

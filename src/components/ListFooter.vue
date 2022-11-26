@@ -1,6 +1,6 @@
 <template>
   <footer class="list-footer" :class="{ 'is-panel': !mode }">
-    <button class="list-footer__btn">
+    <button class="list-footer__btn" @click="openModal">
       <img src="@/assets/img/icon-add.svg" alt="" width="16" height="20" />
     </button>
     <button class="list-footer__btn">
@@ -12,10 +12,17 @@
   </footer>
 </template>
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps, inject } from "vue";
+const $globalPros: any = inject("$globalProps");
+
 const props = defineProps({
   mode: Boolean,
 });
+
+const openModal = () => {
+  console.log($globalPros);
+  $globalPros.$isModal = true;
+};
 </script>
 
 <style scoped lang="scss">

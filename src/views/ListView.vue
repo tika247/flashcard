@@ -40,12 +40,18 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, inject, ref, Ref } from "vue";
+import {
+  defineComponent,
+  inject,
+  ref,
+  Ref,
+  UnwrapNestedRefs,
+  computed,
+} from "vue";
 import ListContents from "../components/ListContents.vue";
 import HdgLevel02 from "../components/HdgLevel02.vue";
 import ListFooter from "../components/ListFooter.vue";
 import ThunderB from "../components/symbol/ThunderB.vue";
-import { WordType } from "@/@type/type";
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 const wordTotal = $word?.value?.length;
 

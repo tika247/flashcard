@@ -2,20 +2,18 @@
   <div class="lyt-inner">
     <router-view />
   </div>
+  <list-modal></list-modal>
 </template>
 
 <script setup lang="ts">
-// import { inject } from "vue";
-// const $globalProps: any = inject("$globalProps");
-
-// import { defineComponent } from "vue";
-// import Sample from "../components/Sample.vue";
-// defineComponent({
-//   name: "Sample",
-//   components: {
-//     Sample,
-//   },
-// });
+import { defineComponent } from "vue";
+import ListModal from "./components/ListModal.vue";
+defineComponent({
+  name: "ListModal",
+  components: {
+    ListModal,
+  },
+});
 </script>
 
 <style lang="scss">
