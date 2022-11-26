@@ -20,7 +20,7 @@
       ></panel-card>
     </ul>
 
-    <div class="quiz-content" v-else>
+    <div class="quiz-contents" v-else>
       <div class="quiz-item">
         <div class="quiz-item__num">Q1</div>
         <panel-card :text="'taunt'"></panel-card>
@@ -107,6 +107,13 @@ h2 {
   gap: 0 80px;
 }
 
+.quiz-contents {
+  margin-top: calc(-1 * $distance-02);
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .quiz-item {
   > *:last-child {
     margin-bottom: 0;
@@ -126,7 +133,7 @@ h2 {
   justify-content: center;
   align-items: center;
   gap: 0 40px;
-  margin-top: $distance-03;
+  margin-top: $distance-02;
 
   > li {
     > button {

@@ -2,7 +2,7 @@
   <div class="list-lyt">
     <hdg-Level02
       :hdg="'Word List'"
-      :text="'〇〇〇 Words Registered'"
+      :text="`${wordTotal} Words Registered`"
     ></hdg-Level02>
     <div class="list-setting">
       <ul class="list-setting__mode">
@@ -35,14 +35,26 @@
 
     <list-contents :mode="modeNormal"></list-contents>
   </div>
-  <list-footer></list-footer>
+  <list-footer :mode="modeNormal"></list-footer>
+  <thunderB></thunderB>
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref, Ref } from "vue";
+import { defineComponent, inject, ref, Ref } from "vue";
 import ListContents from "../components/ListContents.vue";
 import HdgLevel02 from "../components/HdgLevel02.vue";
 import ListFooter from "../components/ListFooter.vue";
+import ThunderB from "../components/symbol/ThunderB.vue";
+import { WordType } from "@/@type/type";
+const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
+const wordTotal = $word?.value?.length;
+
+defineComponent({
+  name: "ThunderB",
+  components: {
+    ThunderB,
+  },
+});
 defineComponent({
   name: "ListContents",
   components: {
@@ -67,8 +79,7 @@ let modeNormal: Ref<boolean> = ref(true);
 
 <style lang="scss" scoped>
 .list-lyt {
-  padding: $distance-01 0;
-  overflow: hidden;
+  padding: $distance-01 0 100px;
 }
 
 .list-setting {

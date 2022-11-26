@@ -4,13 +4,13 @@
       <li>
         <ul class="list-table__category">
           <li><span>Word</span></li>
-          <li><span>Meaning</span></li>
           <li><span>Japanese</span></li>
+          <li><span>Meaning</span></li>
           <li><span>Example</span></li>
           <li><span>Note</span></li>
         </ul>
       </li>
-      <li v-for="item in arr" :key="item.word">
+      <li v-for="item in $word" :key="item.word">
         <list-word
           :check="false"
           :word="item.word"
@@ -25,9 +25,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineComponent } from "vue";
 import ListWord from "./ListWord.vue";
-import { Word } from "@/@type/type";
+import { defineComponent, inject, ref, Ref } from "vue";
+import { WordType } from "@/@type/type";
+const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
 defineComponent({
   name: "ListWord",
@@ -35,16 +36,6 @@ defineComponent({
     ListWord,
   },
 });
-
-const arr: Array<Word> = [
-  {
-    word: "taunt",
-    japanese: "hohogehogehogehogehohogehogehogehogehohogehogehogehoge",
-    meaning: "挑発する",
-    example: "fugafugafugafuga",
-    note: "humuhumuhumu",
-  },
-];
 </script>
 
 <style scoped lang="scss">
@@ -88,7 +79,7 @@ const arr: Array<Word> = [
         white-space: nowrap;
         color: $color-05;
         font-weight: 500;
-        ::-webkit-scrollbar {
+        &::-webkit-scrollbar {
           display: none;
         }
       }

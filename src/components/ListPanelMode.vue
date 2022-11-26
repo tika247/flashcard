@@ -1,34 +1,28 @@
 <template>
-  <swiper-area
-    :slides-per-view="3"
-    :space-between="50"
-    :scrollbar="{ draggable: true }"
-    @swiper="onSwiper"
-    @slideChange="onSlideChange"
-  >
-    <swiper-slide>Slide 1</swiper-slide>
-    <swiper-slide>Slide 2</swiper-slide>
-    <swiper-slide>Slide 3</swiper-slide>
-    ...
-  </swiper-area>
+  <div class="lyt-swiper">
+    <swiper
+      :slides-per-view="4"
+      :space-between="50"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+      :breakpoints="breakpoints"
+    >
+      <swiper-slide v-for="item in $word" :key="item.word">
+        <panel-card-b :data="item" :flip="true"></panel-card-b>
+      </swiper-slide>
+
+      ...
+    </swiper>
+  </div>
 </template>
 <script setup lang="ts">
-import { defineComponent } from "vue";
-import { Scrollbar } from "swiper";
+import { defineComponent, inject, Ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/scrollbar";
-import { Word } from "@/@type/type";
-
-const arr: Array<Word> = [
-  {
-    word: "taunt",
-    japanese: "hohogehogehogehogehohogehogehogehogehohogehogehogehoge",
-    meaning: "挑発する",
-    example: "fugafugafugafuga",
-    note: "humuhumuhumu",
-  },
-];
+import { WordType } from "@/@type/type";
+import PanelCardB from "../components/PanelCardB.vue";
+const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
 defineComponent({
   name: "SwiperArea",
@@ -42,6 +36,12 @@ defineComponent({
     SwiperSlide,
   },
 });
+defineComponent({
+  name: "PanelCardB",
+  components: {
+    PanelCardB,
+  },
+});
 
 const onSwiper = (swiper: any) => {
   console.log(swiper);
@@ -49,6 +49,41 @@ const onSwiper = (swiper: any) => {
 const onSlideChange = () => {
   console.log("slide change");
 };
+
+const breakpoints = {
+  // win>=320px
+  320: {
+    slidesPerView: 2,
+    spaceBetween: 32,
+  },
+  // win>=769px
+  769: {
+    slidesPerView: 3,
+    spaceBetween: 46,
+  },
+  // win>=1201px
+  1201: {
+    slidesPerView: 4,
+    spaceBetween: 72,
+  },
+  // win>=1501px
+  1501: {
+    slidesPerView: 4.5,
+    spaceBetween: 72,
+  },
+};
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.lyt-swiper {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.swiper {
+  overflow: visible;
+  padding: 0 80px 40px;
+  cursor: grab;
+}
+</style>

@@ -82,20 +82,24 @@ $color-darker: #234149;
 
 $text-color: #333;
 
-$fontSize-01: clamp(4rem, 5.6vw, 5.6rem);
-$fontSize-02: clamp(3.2rem, 4vw, 4rem);
-$fontSize-03: clamp(2.4rem, 3.2vw, 3.2rem);
+$panel-width: clamp(240px, 6vw, 320px);
+
+$fontSize-01: clamp(2rem, 4.8vw, 5.6rem);
+$fontSize-02: clamp(1.8rem, 3.6vw, 4rem);
+$fontSize-03: clamp(1.7rem, 3.2vw, 3.2rem);
 $fontSize-04: clamp(1.6rem, 2.4vw, 2.4rem);
 $fontSize-05: clamp(1.4rem, 2vw, 2rem);
 $fontSize-06: clamp(1.2rem, 1.6vw, 1.6rem);
 
-$distance-01: clamp(32px, 10vh, 96px);
-$distance-02: clamp(24px, 6.4vh, 80px);
+$distance-01: clamp(32px, 6.4vh, 96px);
+$distance-02: clamp(24px, 5.6vh, 80px);
 $distance-03: clamp(16px, 4.8vh, 64px);
 
 
 $shadow: -8px -8px 16px $color-brighter,
   8px 8px 16px $color-darker;
+$shadow-reverse: -8px 8px 16px $color-darker,
+  8px -8px 16px $color-brighter;
 
 $ff: "Roboto",
   "Helvetica Neue",
@@ -184,6 +188,10 @@ button {
   outline: none;
   padding: 0;
   appearance: none;
+}
+
+#app {
+  overflow-x: hidden;
 }
 
 @include sp {

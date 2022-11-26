@@ -4,7 +4,7 @@
       <span>{{ word }}</span>
     </li>
     <li>
-      <span>{{ japanese }}</span>
+      <span lang="ja">{{ japanese }}</span>
     </li>
     <li>
       <span>{{ meaning }}</span>
@@ -12,7 +12,7 @@
     <li>
       <span>{{ example }}</span>
     </li>
-    <li>
+    <li v-if="note">
       <span>{{ note }}</span>
     </li>
   </ul>
