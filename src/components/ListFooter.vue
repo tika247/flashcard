@@ -13,15 +13,14 @@
 </template>
 <script setup lang="ts">
 import { defineProps, inject } from "vue";
-const $globalPros: any = inject("$globalProps");
+const $globalProps: any = inject("$globalProps");
 
 const props = defineProps({
   mode: Boolean,
 });
 
 const openModal = () => {
-  console.log($globalPros);
-  $globalPros.$isModal = true;
+  $globalProps.$isModal = true;
 };
 </script>
 

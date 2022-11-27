@@ -1,3 +1,3 @@
 ## todo
 
-- adjust style of panel reversed
+- create forms to submit new word to server in `ListModal.vue`

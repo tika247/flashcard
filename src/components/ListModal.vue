@@ -1,7 +1,20 @@
 <template>
-  <dialog class="modal" ref="modal">
+  <dialog class="modal" ref="modal" @click="clickOverlay">
     <div class="modal__inner">
-      <button type="submit" class="modal__btn" @click="submitInfo">send</button>
+      <div class="modal__content">
+        <ul class="modal__list">
+          <li v-for="item in modalList" :key="item">
+            <span>{{ item }}</span>
+            <textarea :name="item" :id="item"></textarea>
+          </li>
+        </ul>
+
+        <div class="modal__btnWrap">
+          <button type="submit" class="modal__btn" @click="submitInfo">
+            add
+          </button>
+        </div>
+      </div>
     </div>
   </dialog>
 </template>
@@ -14,6 +27,14 @@ const DOC = document.documentElement;
 // Ref
 const modal: Ref<HTMLDialogElement | null> = ref(null);
 
+const modalList: Array<string> = [
+  "word",
+  "japanese",
+  "meaning",
+  "example",
+  "note",
+];
+
 const switchModal = (isModal: boolean) => {
   isModal ? showModal() : closeModal();
 };
@@ -24,6 +45,15 @@ const showModal = () => {
 const closeModal = () => {
   modal.value?.close();
   DOC.style.overflow = "visible";
+};
+
+const clickOverlay = (e: Event) => {
+  if (!(e.target instanceof HTMLElement)) {
+    return;
+  }
+  if (e.target === modal.value) {
+    $globalProps.$isModal = false;
+  }
 };
 
 const submitInfo = () => {
@@ -69,23 +99,68 @@ watch(
   backdrop-filter: blur(5px);
   padding: $distance-01 0;
   overflow-y: auto;
-
-  &__inner {
-    width: min(1200px, 90%);
-    margin: 0 auto;
-    padding: $distance-03;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
+  &::backdrop {
+    backdrop-filter: blur(5px);
   }
 
-  &::backdrop {
-    background-color: rgba(0, 0, 0, 0.5);
+  &__inner {
+    width: min(900px, 90%);
+    margin: 0 auto;
+  }
+  &__content {
+    padding: $distance-03;
+    background-color: $color-brighter;
+    color: #fff;
+    box-shadow: 0 0 16px $color-darker;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px 0;
+    margin-bottom: 24px;
+
+    > li {
+      > span {
+        display: block;
+        color: $color-05;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+
+      > textarea {
+        width: 100%;
+        background-color: $color-darker;
+        outline-color: $color-brighter;
+        border-color: $color-01;
+        color: $color-03;
+        padding: 8px;
+      }
+    }
+  }
+
+  &__btnWrap {
+    text-align: center;
   }
 
   &__btn {
-    text-align: center;
+    width: 56px;
+    height: 56px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-01;
+    color: #fff;
+    box-shadow: $shadow;
+    border-radius: 50%;
+    transition: 0.3s background-color ease-in-out, 0.3s transform ease-in-out;
+
+    &:hover,
+    &:active,
+    &:focus {
+      transform: scale(1.3);
+      background-color: $color-brighter;
+    }
   }
 }
 </style>
