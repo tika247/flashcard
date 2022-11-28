@@ -36,8 +36,8 @@ const __dirname = path.dirname(__filename);
    * @description activate server
    */
   app.post('/', (req, res) => {
-    console.log(req.body.data);
-    res.send(req.body.data);
+    console.log(req.body);
+    res.send(req.body);
   })
 
   /**

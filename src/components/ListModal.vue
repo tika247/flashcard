@@ -10,7 +10,7 @@
         </ul>
 
         <div class="modal__btnWrap">
-          <button type="submit" class="modal__btn" @click="submitInfo">
+          <button type="submit" class="modal__btn" @click="submitNewWord">
             add
           </button>
         </div>
@@ -56,12 +56,32 @@ const clickOverlay = (e: Event) => {
   }
 };
 
-const submitInfo = () => {
-  const params = new URLSearchParams();
-  params.append("data", "Some Data!");
+const returnNewWordInfo = (): Array<string> | undefined => {
+  const textareas: HTMLCollectionOf<HTMLTextAreaElement> | undefined =
+    modal.value?.getElementsByTagName("textarea");
+  if (!textareas?.length) {
+    return;
+  }
+  const wordInfo = Array.from(textareas).map((el) => el.value);
+
+  return wordInfo;
+};
+
+const submitNewWord = () => {
+  const enteredWordInfo: Array<string> | undefined = returnNewWordInfo();
+  if (!enteredWordInfo) {
+    return;
+  }
+  interface newWordInfoType {
+    [key: string]: string;
+  }
+  let newWordInfo: newWordInfoType = {};
+  for (let i = 0; i < modalList.length; i++) {
+    newWordInfo[modalList[i]] = enteredWordInfo[i];
+  }
 
   axios
-    .post("/", params)
+    .post("/", newWordInfo)
     .then((res) => {
       console.table(res.data);
     })
