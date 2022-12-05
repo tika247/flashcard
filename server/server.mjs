@@ -3,22 +3,24 @@ import {
   createServer
 } from "http";
 import path from 'path';
+import fs from 'fs';
 import {
   fileURLToPath
 } from 'url';
+import helper from "./modules/helper.mjs"
 import mGetApi from "./modules/getApi.mjs"
+import mPostNewWord from "./modules/postNewWord.mjs"
 const __filename = fileURLToPath(
   import.meta.url);
-  
-  (function () {
+
+(() => {
   const __dirname = path.dirname(__filename);
-  let wordData = null;
   const app = express();
   app.use(express.static("dist")); // get document root
-
   const httpServer = createServer(app);
-
   const PORT = process.env.PORT || 3000;
+  const apiData = JSON.parse(fs.readFileSync(`${process.cwd()}/dist/api/api.json`, 'utf8'));
+  app.set('wordData', apiData);
 
   app.use('/img', express.static(`${__dirname}/dist/img/`));
   app.use('/css', express.static(`${__dirname}/dist/css/`));
@@ -31,24 +33,28 @@ const __filename = fileURLToPath(
   }));
 
   /**
-   * @description set up routing
+   * @description Inicial Rendering
    */
-  app.get("/", async (req, res) => {
+  app.get("/", async (req, res, next) => {
     res.sendFile(__dirname + "/dist/index.html");
+
+    next();
   });
 
   /**
-   * @description set up routing
+   * @description get latest wordData
    */
-  wordData = app.use("/api/", mGetApi);
+  app.use("/api/", mGetApi);
 
   /**
    * @description add new word
    */
-  app.post('/addNewWord', (req, res) => {
-    console.log(req.body);
-    res.send(req.body);
-  })
+  app.use("/addNewWord", mPostNewWord);
+
+  /**
+   * @description watch change
+   */
+  helper.watchPropChange(app.locals.settings.wordData);
 
   /**
    * @description activate server
