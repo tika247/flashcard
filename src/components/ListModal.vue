@@ -27,6 +27,11 @@ const DOC = document.documentElement;
 // Ref
 const modal: Ref<HTMLDialogElement | null> = ref(null);
 
+// Type
+interface newWordInfoType {
+  [key: string]: string;
+}
+
 const modalList: Array<string> = [
   "word",
   "japanese",
@@ -72,16 +77,13 @@ const submitNewWord = () => {
   if (!enteredWordInfo) {
     return;
   }
-  interface newWordInfoType {
-    [key: string]: string;
-  }
   let newWordInfo: newWordInfoType = {};
   for (let i = 0; i < modalList.length; i++) {
     newWordInfo[modalList[i]] = enteredWordInfo[i];
   }
 
   axios
-    .post("/", newWordInfo)
+    .post("/addNewWord", newWordInfo)
     .then((res) => {
       console.table(res.data);
     })
@@ -128,7 +130,7 @@ watch(
     margin: 0 auto;
   }
   &__content {
-    padding: $distance-03;
+    padding: $distance-01;
     background-color: $color-brighter;
     color: #fff;
     box-shadow: 0 0 16px $color-darker;

@@ -6,11 +6,13 @@ import path from 'path';
 import {
   fileURLToPath
 } from 'url';
+import mGetApi from "./modules/getApi.mjs"
 const __filename = fileURLToPath(
   import.meta.url);
-const __dirname = path.dirname(__filename);
-
-(function () {
+  
+  (function () {
+  const __dirname = path.dirname(__filename);
+  let wordData = null;
   const app = express();
   app.use(express.static("dist")); // get document root
 
@@ -18,24 +20,32 @@ const __dirname = path.dirname(__filename);
 
   const PORT = process.env.PORT || 3000;
 
-  app.use('/img', express.static(__dirname + '/dist/img/'));
-  app.use('/css', express.static(__dirname + '/dist/css/'));
-  app.use('/js', express.static(__dirname + '/dist/js/'));
+  app.use('/img', express.static(`${__dirname}/dist/img/`));
+  app.use('/css', express.static(`${__dirname}/dist/css/`));
+  app.use('/js', express.static(`${__dirname}/dist/js/`));
 
+  // TODO:check if needed
   app.use(express.json());
   app.use(express.urlencoded({
     extended: true
   }));
 
-  app.get("/", (req, res) => {
-    // set up routing
+  /**
+   * @description set up routing
+   */
+  app.get("/", async (req, res) => {
     res.sendFile(__dirname + "/dist/index.html");
   });
 
   /**
-   * @description activate server
+   * @description set up routing
    */
-  app.post('/', (req, res) => {
+  wordData = app.use("/api/", mGetApi);
+
+  /**
+   * @description add new word
+   */
+  app.post('/addNewWord', (req, res) => {
     console.log(req.body);
     res.send(req.body);
   })

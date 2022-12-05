@@ -8,7 +8,7 @@ module.exports = {
   },
   devServer: {
     port: 8080,
-    // localhostでvueからexpressにAPIリクエストを送信する為の設定
+    // setting for connecting localhost with express server to manipulate API request
     proxy: "http://localhost:3000",
   },
 };
