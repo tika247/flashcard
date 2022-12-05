@@ -22,11 +22,17 @@ const __filename = fileURLToPath(
   const apiData = JSON.parse(fs.readFileSync(`${process.cwd()}/dist/api/api.json`, 'utf8'));
   app.set('wordData', apiData);
 
+  /**
+   * @description set static
+   */
   app.use('/img', express.static(`${__dirname}/dist/img/`));
   app.use('/css', express.static(`${__dirname}/dist/css/`));
   app.use('/js', express.static(`${__dirname}/dist/js/`));
 
-  // TODO:check if needed
+  /**
+   * @description JSON manipulation
+   * @todo check if needed
+   */
   app.use(express.json());
   app.use(express.urlencoded({
     extended: true
@@ -42,19 +48,14 @@ const __filename = fileURLToPath(
   });
 
   /**
-   * @description get latest wordData
+   * @description When browser-open, get latest wordData
    */
   app.use("/api/", mGetApi);
 
   /**
-   * @description add new word
+   * @description Add new-word
    */
   app.use("/addNewWord", mPostNewWord);
-
-  /**
-   * @description watch change
-   */
-  helper.watchPropChange(app.locals.settings.wordData);
 
   /**
    * @description activate server

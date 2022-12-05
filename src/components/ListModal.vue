@@ -23,6 +23,7 @@ import axios from "axios";
 import { ref, Ref, inject, watch, nextTick } from "vue";
 const $globalProps: any = inject("$globalProps");
 const DOC = document.documentElement;
+const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
 // Ref
 const modal: Ref<HTMLDialogElement | null> = ref(null);
@@ -85,7 +86,9 @@ const submitNewWord = () => {
   axios
     .post("/addNewWord", newWordInfo)
     .then((res) => {
-      console.table(res.data);
+      if ($word) {
+        $word.value = res.data;
+      }
     })
     .catch((error) => {
       console.log(error);

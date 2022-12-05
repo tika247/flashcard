@@ -1,8 +1,8 @@
-import axios from "axios";
+/**
+ * @description When browser-open, send `app.locals.settings.wordData` to front
+ */
 import express from "express";
 const mGetApi = express.Router();
-// const URL = `${process.cwd()}/dist/api/api.json`;
-const URL = "http://localhost:8080/api/api.json";
 
 mGetApi.get("/", async (req, res, next) => {
   res.send(req.app.get("wordData"));

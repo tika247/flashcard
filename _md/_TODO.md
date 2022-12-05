@@ -1,8 +1,11 @@
+## next
+
+- remove previous entered state when backing to ListModal again
+- when edit btn clicked, change mode in `ListTableMode` and  `ListPanelMode`
+
 ## todo
 
-- create forms to submit new word to server in `ListModal.vue`
-
-
+- when server close, update latest data to `/api/api.json`
 
 ## check
 

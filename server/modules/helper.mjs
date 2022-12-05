@@ -1,7 +1,7 @@
-/**
- * @description watch when properties changes in wordData
- */
 const helper = {
+  /**
+   * @description watch when properties changes in wordData
+   */
   watchPropChange: (obj, propName) => {
     let value = obj[propName];
     Object.defineProperty(obj, propName, {
