@@ -97,17 +97,17 @@ $distance-03: clamp(16px, 4.8vh, 64px);
 
 
 $shadow: -8px -8px 16px $color-brighter,
-  8px 8px 16px $color-darker;
+8px 8px 16px $color-darker;
 $shadow-reverse: -8px 8px 16px $color-darker,
-  8px -8px 16px $color-brighter;
+8px -8px 16px $color-brighter;
 
 $ff: "Roboto",
-  "Helvetica Neue",
-  Arial,
-  "Hiragino Kaku Gothic ProN",
-  "Hiragino Sans",
-  Meiryo,
-  sans-serif;
+"Helvetica Neue",
+Arial,
+"Hiragino Kaku Gothic ProN",
+"Hiragino Sans",
+Meiryo,
+sans-serif;
 
 $reference: 1200px;
 $padding: 20px;
@@ -131,6 +131,14 @@ $padding: 20px;
 
 @mixin sp {
   @media screen and (max-width: $breakPoint*1px) {
+    @content;
+  }
+}
+
+@mixin hover {
+  &:hover,
+  &:focus,
+  &:active {
     @content;
   }
 }
@@ -195,7 +203,7 @@ dialog {
   margin: 0;
   border: none;
   background-color: transparent;
-  
+
   &:modal {
     max-width: inherit;
     max-height: inherit;
