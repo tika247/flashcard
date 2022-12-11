@@ -19,8 +19,6 @@ const word: Ref<Array<WordType> | null> = ref(null);
       console.log("JSON file does not exsist or broken", error);
     });
 
-  console.log(word.value);
-
   const vm = createApp(App);
   vm.use(router);
   vm.provide("$globalProps", globalProps);

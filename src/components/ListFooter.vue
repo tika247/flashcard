@@ -1,13 +1,28 @@
 <template>
   <footer class="list-footer" :class="{ 'is-panel': !mode }">
     <button class="list-footer__btn" @click="openModal">
-      <img src="@/assets/img/icon-add.svg" alt="" width="16" height="20" />
+      <img
+        src="@/assets/img/icon-add.svg"
+        alt="add new word"
+        width="16"
+        height="20"
+      />
     </button>
-    <button class="list-footer__btn">
-      <img src="@/assets/img/icon-edit.svg" alt="" width="19" height="19" />
+    <button class="list-footer__btn" @click="startSelectMode">
+      <img
+        src="@/assets/img/icon-edit.svg"
+        alt="edit a word"
+        width="19"
+        height="19"
+      />
     </button>
-    <button class="list-footer__btn">
-      <img src="@/assets/img/icon-delete.svg" alt="" width="19" height="20" />
+    <button class="list-footer__btn" @click="startSelectMode">
+      <img
+        src="@/assets/img/icon-delete.svg"
+        alt="remove a word"
+        width="19"
+        height="20"
+      />
     </button>
   </footer>
 </template>
@@ -15,12 +30,16 @@
 import { defineProps, inject } from "vue";
 const $globalProps: any = inject("$globalProps");
 
-const props = defineProps({
+defineProps({
   mode: Boolean,
 });
 
 const openModal = () => {
   $globalProps.$isModal = true;
+};
+
+const startSelectMode = () => {
+  $globalProps.$isSelectMode = true;
 };
 </script>
 

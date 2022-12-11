@@ -1,6 +1,5 @@
 ## next
 
-- remove previous entered state when backing to ListModal again
 - when edit btn clicked, change mode in `ListTableMode` and  `ListPanelMode`
 
 ## todo

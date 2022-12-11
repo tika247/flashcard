@@ -11,3 +11,9 @@
 const apiData = JSON.parse(fs.readFileSync(`${process.cwd()}/dist/api/api.json`, 'utf8'));
 
 ```
+
+## difference of NodeList and HTMLCollection
+
+- NodeList is static
+- HTMLCollection is dynamic
+- when the origin changes, only HTMLCollection reflects it

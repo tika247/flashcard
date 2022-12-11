@@ -20,7 +20,7 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import { ref, Ref, inject, watch, nextTick } from "vue";
+import { ref, Ref, inject, watch, nextTick, onMounted } from "vue";
 const $globalProps: any = inject("$globalProps");
 const DOC = document.documentElement;
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
@@ -40,6 +40,12 @@ const modalList: Array<string> = [
   "example",
   "note",
 ];
+
+// HTMLCollection of textareas
+let textareas: HTMLCollectionOf<HTMLTextAreaElement> | undefined = undefined;
+onMounted(() => {
+  textareas = modal.value?.getElementsByTagName("textarea");
+});
 
 const switchModal = (isModal: boolean) => {
   isModal ? showModal() : closeModal();
@@ -63,8 +69,6 @@ const clickOverlay = (e: Event) => {
 };
 
 const returnNewWordInfo = (): Array<string> | undefined => {
-  const textareas: HTMLCollectionOf<HTMLTextAreaElement> | undefined =
-    modal.value?.getElementsByTagName("textarea");
   if (!textareas?.length) {
     return;
   }
@@ -73,7 +77,7 @@ const returnNewWordInfo = (): Array<string> | undefined => {
   return wordInfo;
 };
 
-const submitNewWord = () => {
+const submitNewWord = async () => {
   const enteredWordInfo: Array<string> | undefined = returnNewWordInfo();
   if (!enteredWordInfo) {
     return;
@@ -83,16 +87,25 @@ const submitNewWord = () => {
     newWordInfo[modalList[i]] = enteredWordInfo[i];
   }
 
-  axios
+  await axios
     .post("/addNewWord", newWordInfo)
     .then((res) => {
       if ($word) {
         $word.value = res.data;
+
+        if (!textareas?.length) {
+          return;
+        }
+        for (const el of textareas) {
+          el.value = "";
+        }
       }
     })
     .catch((error) => {
       console.log(error);
     });
+
+  $globalProps.$isModal = false;
 };
 
 /**
