@@ -2,18 +2,26 @@
   <div class="lyt-inner">
     <router-view />
   </div>
-  <list-modal-a v-if="$globalProps.$modalMode === 'A'"></list-modal-a>
+  <list-modal-a v-if="$globalProps.$modalMode.type === 'A'"></list-modal-a>
+  <list-modal-b v-if="$globalProps.$modalMode.type === 'B'"></list-modal-b>
 </template>
 
 <script setup lang="ts">
 import { defineComponent, inject, nextTick, watch } from "vue";
 import ListModalA from "./components/ListModalA.vue";
+import ListModalB from "./components/ListModalB.vue";
 const $globalProps: any = inject("$globalProps");
 const DOC = document.documentElement;
 defineComponent({
   name: "ListModalA",
   components: {
     ListModalA,
+  },
+});
+defineComponent({
+  name: "ListModalB",
+  components: {
+    ListModalB,
   },
 });
 
@@ -39,8 +47,7 @@ watch(
      * @returns {void}
      */
     nextTick(() => {
-      console.log($globalProps.$modalMode);
-      switchModal($globalProps.$modalMode);
+      switchModal($globalProps.$modalMode.type);
     });
   },
   { deep: true }

@@ -49,7 +49,7 @@ defineProps({
 });
 
 const openModal = (type: string) => {
-  $globalProps.$modalMode = type;
+  $globalProps.$modalMode.type = type;
 };
 
 const startSelectMode = (type: string) => {
@@ -67,7 +67,7 @@ const returnIsSelectMode = computed((): boolean => {
 
 const closeModal = () => {
   DOC.style.overflow = "visible";
-  $globalProps.$modalMode = false;
+  $globalProps.$modalMode.type = false;
 };
 </script>
 

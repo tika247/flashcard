@@ -24,11 +24,11 @@
 
       <tbody>
         <tr
-          v-for="item in $word"
+          v-for="(item, i) in $word"
           :key="item.word"
           :class="{ 'is-clickable': returnIsSelectMode }"
           :tabindex="returnTabIndex"
-          @click="openModal"
+          @click="openModal(i)"
         >
           <list-word
             :check="false"
@@ -65,9 +65,10 @@ const returnIsSelectMode = computed((): boolean => {
   return $globalProps.$isSelectMode;
 });
 
-const openModal = () => {
+const openModal = (i: number) => {
   if ($globalProps.$isSelectMode === "edit") {
-    $globalProps.$modalMode = "B";
+    $globalProps.$modalMode.type = "B";
+    $globalProps.$modalMode.index = i;
   }
 };
 </script>

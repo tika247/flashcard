@@ -11,7 +11,7 @@
 
         <div class="modal__btnWrap">
           <button type="submit" class="modal__btn" @click="submitNewWord">
-            add
+            Done
           </button>
         </div>
       </div>
@@ -44,7 +44,22 @@ const modalList: Array<string> = [
 let textareas: HTMLCollectionOf<HTMLTextAreaElement> | undefined = undefined;
 onMounted(() => {
   textareas = modal.value?.getElementsByTagName("textarea");
+  reflectTargetInfo();
 });
+
+/**
+ * @description reflect edit target word info into textareas
+ * @returns {void}
+ */
+const reflectTargetInfo = () => {
+  if (!textareas || !$word?.value) {
+    return;
+  }
+  const target = $word.value[$globalProps.$modalMode.index];
+  for (let i = 0; i < textareas.length; i++) {
+    textareas[i].value = Object.values(target)[i];
+  }
+};
 
 /**
  * @description detect if overlay is clicked
@@ -105,6 +120,7 @@ const submitNewWord = async () => {
     });
 
   $globalProps.$modalMode.type = false;
+  $globalProps.$isSelectMode = false;
 };
 </script>
 
