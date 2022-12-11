@@ -1,56 +1,45 @@
 <template>
   <footer class="list-footer" :class="{ 'is-panel': !mode }">
-    <button
-      class="list-footer__btn"
+    <list-btn
       @click="openModal"
       v-if="!returnIsSelectMode"
+      :filename="'icon-add.svg'"
+      :altText="'add new word'"
+      :widthNum="'16'"
+      :heightNum="'20'"
     >
-      <img
-        src="@/assets/img/icon-add.svg"
-        alt="add new word"
-        width="16"
-        height="20"
-      />
-    </button>
-    <button
-      class="list-footer__btn"
+    </list-btn>
+    <list-btn
       @click="startSelectMode"
       v-if="!returnIsSelectMode"
+      :filename="'icon-edit.svg'"
+      :altText="'edit a word'"
+      :widthNum="'19'"
+      :heightNum="'19'"
     >
-      <img
-        src="@/assets/img/icon-edit.svg"
-        alt="edit a word"
-        width="19"
-        height="19"
-      />
-    </button>
-    <button
-      class="list-footer__btn"
+    </list-btn>
+    <list-btn
       @click="startSelectMode"
       v-if="!returnIsSelectMode"
+      :filename="'icon-delete.svg'"
+      :altText="'remove a word'"
+      :widthNum="'19'"
+      :heightNum="'20'"
     >
-      <img
-        src="@/assets/img/icon-delete.svg"
-        alt="remove a word"
-        width="19"
-        height="20"
-      />
-    </button>
-    <button
-      class="list-footer__btn"
+    </list-btn>
+    <list-btn
       @click="closeSelectMode"
       v-if="returnIsSelectMode"
+      :filename="'icon-close.svg'"
+      :altText="'close select mode'"
+      :widthNum="'14'"
+      :heightNum="'14'"
     >
-      <img
-        src="@/assets/img/icon-close.svg"
-        alt="close select mode"
-        width="14"
-        height="14"
-      />
-    </button>
+    </list-btn>
   </footer>
 </template>
 <script setup lang="ts">
+import ListBtn from "./ListBtn.vue";
 import { defineProps, inject, computed } from "vue";
 const $globalProps: any = inject("$globalProps");
 
@@ -94,25 +83,6 @@ const returnIsSelectMode = computed((): boolean => {
     left: inherit;
     margin-top: -104px;
     padding: 32px 16px 56px;
-  }
-
-  &__btn {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $color-01;
-    box-shadow: $shadow;
-    border-radius: 50%;
-    transition: 0.3s background-color ease-in-out, 0.3s transform ease-in-out;
-
-    &:hover,
-    &:active,
-    &:focus {
-      transform: scale(1.3);
-      background-color: $color-brighter;
-    }
   }
 }
 </style>
