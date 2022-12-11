@@ -26,7 +26,7 @@
         <tr
           v-for="item in $word"
           :key="item.word"
-          :class="{ 'is-clickable': $globalProps.$isSelectMode }"
+          :class="{ 'is-clickable': returnIsSelectMode }"
           :tabindex="returnTabIndex"
         >
           <list-word
@@ -58,6 +58,10 @@ defineComponent({
 
 const returnTabIndex = computed((): string => {
   return $globalProps.$isSelectMode ? "0" : "-1";
+});
+
+const returnIsSelectMode = computed((): boolean => {
+  return $globalProps.$isSelectMode;
 });
 </script>
 

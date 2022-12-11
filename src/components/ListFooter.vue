@@ -1,6 +1,10 @@
 <template>
   <footer class="list-footer" :class="{ 'is-panel': !mode }">
-    <button class="list-footer__btn" @click="openModal">
+    <button
+      class="list-footer__btn"
+      @click="openModal"
+      v-if="!returnIsSelectMode"
+    >
       <img
         src="@/assets/img/icon-add.svg"
         alt="add new word"
@@ -8,7 +12,11 @@
         height="20"
       />
     </button>
-    <button class="list-footer__btn" @click="startSelectMode">
+    <button
+      class="list-footer__btn"
+      @click="startSelectMode"
+      v-if="!returnIsSelectMode"
+    >
       <img
         src="@/assets/img/icon-edit.svg"
         alt="edit a word"
@@ -16,7 +24,11 @@
         height="19"
       />
     </button>
-    <button class="list-footer__btn" @click="startSelectMode">
+    <button
+      class="list-footer__btn"
+      @click="startSelectMode"
+      v-if="!returnIsSelectMode"
+    >
       <img
         src="@/assets/img/icon-delete.svg"
         alt="remove a word"
@@ -24,10 +36,22 @@
         height="20"
       />
     </button>
+    <button
+      class="list-footer__btn"
+      @click="closeSelectMode"
+      v-if="returnIsSelectMode"
+    >
+      <img
+        src="@/assets/img/icon-close.svg"
+        alt="close select mode"
+        width="14"
+        height="14"
+      />
+    </button>
   </footer>
 </template>
 <script setup lang="ts">
-import { defineProps, inject } from "vue";
+import { defineProps, inject, computed } from "vue";
 const $globalProps: any = inject("$globalProps");
 
 defineProps({
@@ -41,6 +65,14 @@ const openModal = () => {
 const startSelectMode = () => {
   $globalProps.$isSelectMode = true;
 };
+
+const closeSelectMode = () => {
+  $globalProps.$isSelectMode = false;
+};
+
+const returnIsSelectMode = computed((): boolean => {
+  return $globalProps.$isSelectMode;
+});
 </script>
 
 <style scoped lang="scss">
