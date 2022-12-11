@@ -2,28 +2,28 @@
   <div class="quiz-lyt">
     <hdg-Level02 :hdg="'Word Quiz'" :text="'Select Quiz Mode'"></hdg-Level02>
     <ul class="quiz-panel-list" v-if="!quizMode">
-      <panel-card
+      <panel-card-a
         :text="'Review'"
         @click="
           {
             quizMode = 'Review';
           }
         "
-      ></panel-card>
-      <panel-card
+      ></panel-card-a>
+      <panel-card-a
         :text="'Rondom'"
         @click="
           {
             quizMode = 'Rondom';
           }
         "
-      ></panel-card>
+      ></panel-card-a>
     </ul>
 
     <div class="quiz-contents" v-else>
       <div class="quiz-item">
         <div class="quiz-item__num">Q1</div>
-        <panel-card :text="'taunt'"></panel-card>
+        <panel-card-a :text="'taunt'"></panel-card-a>
       </div>
 
       <ul class="quiz-controller">
@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { defineComponent, ref, Ref } from "vue";
 import ThunderB from "../components/symbol/ThunderB.vue";
-import PanelCard from "../components/PanelCard.vue";
+import PanelCardA from "../components/PanelCardA.vue";
 import HdgLevel02 from "../components/HdgLevel02.vue";
 
 defineComponent({
@@ -72,9 +72,9 @@ defineComponent({
 });
 
 defineComponent({
-  name: "PanelCard",
+  name: "PanelCardA",
   components: {
-    PanelCard,
+    PanelCardA,
   },
 });
 
