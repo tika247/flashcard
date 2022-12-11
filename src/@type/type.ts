@@ -1,5 +1,5 @@
 interface GlobalPropsType {
-  $isModal: boolean;
+  $modalMode: string | boolean;
 }
 interface WordType {
   word: string;

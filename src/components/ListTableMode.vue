@@ -28,6 +28,7 @@
           :key="item.word"
           :class="{ 'is-clickable': returnIsSelectMode }"
           :tabindex="returnTabIndex"
+          @click="openModal"
         >
           <list-word
             :check="false"
@@ -63,6 +64,12 @@ const returnTabIndex = computed((): string => {
 const returnIsSelectMode = computed((): boolean => {
   return $globalProps.$isSelectMode;
 });
+
+const openModal = () => {
+  if ($globalProps.$isSelectMode === "edit") {
+    $globalProps.$modalMode = "B";
+  }
+};
 </script>
 
 <style scoped lang="scss">

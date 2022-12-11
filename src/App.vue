@@ -2,18 +2,49 @@
   <div class="lyt-inner">
     <router-view />
   </div>
-  <list-modal></list-modal>
+  <list-modal-a v-if="$globalProps.$modalMode === 'A'"></list-modal-a>
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from "vue";
-import ListModal from "./components/ListModal.vue";
+import { defineComponent, inject, nextTick, watch } from "vue";
+import ListModalA from "./components/ListModalA.vue";
+const $globalProps: any = inject("$globalProps");
+const DOC = document.documentElement;
 defineComponent({
-  name: "ListModal",
+  name: "ListModalA",
   components: {
-    ListModal,
+    ListModalA,
   },
 });
+
+const switchModal = (modalMode: string | boolean) => {
+  modalMode ? showModal() : closeModal();
+};
+const showModal = () => {
+  DOC.style.overflow = "hidden";
+};
+const closeModal = () => {
+  DOC.style.overflow = "visible";
+};
+
+/**
+ * @description watch - when $globalProps changes
+ * @returns {void}
+ */
+watch(
+  $globalProps,
+  () => {
+    /**
+     * nextTick
+     * @returns {void}
+     */
+    nextTick(() => {
+      console.log($globalProps.$modalMode);
+      switchModal($globalProps.$modalMode);
+    });
+  },
+  { deep: true }
+);
 </script>
 
 <style lang="scss">

@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 
 const globalProps: GlobalPropsType = reactive({
-  $isModal: false,
+  $modalMode: false,
   $isSelectMode: false,
 });
 

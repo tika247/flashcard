@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import { defineProps, Ref, ref } from "vue";
 
-const props = defineProps({
+defineProps({
   data: Object,
 });
 

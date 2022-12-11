@@ -1,5 +1,5 @@
 <template>
-  <dialog class="modal" ref="modal" @click="clickOverlay">
+  <dialog class="modal" ref="modal" @click="clickOverlay" open>
     <div class="modal__inner">
       <div class="modal__content">
         <ul class="modal__list">
@@ -20,9 +20,8 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import { ref, Ref, inject, watch, nextTick, onMounted } from "vue";
+import { ref, Ref, inject, onMounted } from "vue";
 const $globalProps: any = inject("$globalProps");
-const DOC = document.documentElement;
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
 // Ref
@@ -47,24 +46,12 @@ onMounted(() => {
   textareas = modal.value?.getElementsByTagName("textarea");
 });
 
-const switchModal = (isModal: boolean) => {
-  isModal ? showModal() : closeModal();
-};
-const showModal = () => {
-  modal.value?.showModal();
-  DOC.style.overflow = "hidden";
-};
-const closeModal = () => {
-  modal.value?.close();
-  DOC.style.overflow = "visible";
-};
-
 const clickOverlay = (e: Event) => {
   if (!(e.target instanceof HTMLElement)) {
     return;
   }
   if (e.target === modal.value) {
-    $globalProps.$isModal = false;
+    $globalProps.$modalMode = false;
   }
 };
 
@@ -105,26 +92,8 @@ const submitNewWord = async () => {
       console.log(error);
     });
 
-  $globalProps.$isModal = false;
+  $globalProps.$modalMode = false;
 };
-
-/**
- * @description watch - when $globalProps changes
- * @returns {void}
- */
-watch(
-  $globalProps,
-  () => {
-    /**
-     * nextTick
-     * @returns {void}
-     */
-    nextTick(() => {
-      switchModal($globalProps.$isModal);
-    });
-  },
-  { deep: true }
-);
 </script>
 
 <style scoped lang="scss">

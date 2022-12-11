@@ -1,7 +1,7 @@
 <template>
   <footer class="list-footer" :class="{ 'is-panel': !mode }">
     <list-btn
-      @click="openModal"
+      @click="openModal('A')"
       v-if="!returnIsSelectMode"
       :filename="'icon-add.svg'"
       :altText="'add new word'"
@@ -41,14 +41,15 @@
 <script setup lang="ts">
 import ListBtn from "./ListBtn.vue";
 import { defineProps, inject, computed } from "vue";
+const DOC = document.documentElement;
 const $globalProps: any = inject("$globalProps");
 
 defineProps({
   mode: Boolean,
 });
 
-const openModal = () => {
-  $globalProps.$isModal = true;
+const openModal = (type: string) => {
+  $globalProps.$modalMode = type;
 };
 
 const startSelectMode = (type: string) => {
@@ -57,11 +58,17 @@ const startSelectMode = (type: string) => {
 
 const closeSelectMode = () => {
   $globalProps.$isSelectMode = false;
+  closeModal();
 };
 
 const returnIsSelectMode = computed((): boolean => {
   return $globalProps.$isSelectMode;
 });
+
+const closeModal = () => {
+  DOC.style.overflow = "visible";
+  $globalProps.$modalMode = false;
+};
 </script>
 
 <style scoped lang="scss">
