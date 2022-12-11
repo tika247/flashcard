@@ -10,7 +10,7 @@
     >
     </list-btn>
     <list-btn
-      @click="startSelectMode"
+      @click="startSelectMode('edit')"
       v-if="!returnIsSelectMode"
       :filename="'icon-edit.svg'"
       :altText="'edit a word'"
@@ -19,7 +19,7 @@
     >
     </list-btn>
     <list-btn
-      @click="startSelectMode"
+      @click="startSelectMode('remove')"
       v-if="!returnIsSelectMode"
       :filename="'icon-delete.svg'"
       :altText="'remove a word'"
@@ -51,8 +51,8 @@ const openModal = () => {
   $globalProps.$isModal = true;
 };
 
-const startSelectMode = () => {
-  $globalProps.$isSelectMode = true;
+const startSelectMode = (type: string) => {
+  $globalProps.$isSelectMode = type;
 };
 
 const closeSelectMode = () => {
