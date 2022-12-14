@@ -1,7 +1,7 @@
 interface GlobalPropsType {
   $modalMode: {
     type: string | boolean;
-    index?: number;
+    index: number | null;
   };
 }
 interface WordType {

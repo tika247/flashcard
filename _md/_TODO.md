@@ -1,7 +1,6 @@
 ## next
 
-- create `Done btn` in `ListModalB`
-- remove funtion in `ListModalC`
+- remove funtion in `ListModalC` at lint-57
 
 ## todo
 

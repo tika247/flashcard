@@ -18,6 +18,7 @@
             :widthNum="'24'"
             :heightNum="'24'"
             :sizeClass="'is-large'"
+            @click="submitRemoveWord"
           ></list-btn-a>
         </div>
       </div>
@@ -52,11 +53,12 @@ const closeModal = () => {
  * @description submit new word info to server-side
  * @returns {Promise}
  */
-// const submitRemoveWord = async () => {
+const submitRemoveWord = async () => {
+  alert($globalProps.$modalMode.index);
 
-//   $globalProps.$modalMode.type = false;
-//   $globalProps.$isSelectMode = false;
-// };
+  $globalProps.$modalMode.type = false;
+  $globalProps.$isSelectMode = false;
+};
 </script>
 
 <style scoped lang="scss">
