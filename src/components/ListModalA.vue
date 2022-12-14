@@ -19,7 +19,7 @@
   </dialog>
 </template>
 <script setup lang="ts">
-import axios from "axios";
+import apiController from "../helper/apiController";
 import { ref, Ref, inject, onMounted } from "vue";
 const $globalProps: any = inject("$globalProps");
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
@@ -86,23 +86,18 @@ const submitNewWord = async () => {
     newWordInfo[modalList[i]] = enteredWordInfo[i];
   }
 
-  await axios
-    .post("/addNewWord", newWordInfo)
-    .then((res) => {
-      if ($word) {
-        $word.value = res.data;
+  if (!$word) {
+    alert("Error: Couldn't get API!");
+    return;
+  }
+  $word.value = await apiController.addNewWord($word, newWordInfo);
 
-        if (!textareas?.length) {
-          return;
-        }
-        for (const el of textareas) {
-          el.value = "";
-        }
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  if (!textareas?.length) {
+    return;
+  }
+  for (const el of textareas) {
+    el.value = "";
+  }
 
   $globalProps.$modalMode.type = false;
 };
