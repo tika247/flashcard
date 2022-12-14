@@ -1,5 +1,5 @@
 <template>
-  <button class="btn">
+  <button class="btn" :class="sizeClass">
     <img
       :src="require(`@/assets/img/${filename}`)"
       :alt="altText"
@@ -16,6 +16,7 @@ defineProps({
   altText: String,
   widthNum: String,
   heightNum: String,
+  sizeClass: String,
 });
 </script>
 
@@ -36,6 +37,11 @@ defineProps({
   &:focus {
     transform: scale(1.3);
     background-color: $color-brighter;
+  }
+
+  &.is-large {
+    width: 48px;
+    height: 48px;
   }
 }
 </style>

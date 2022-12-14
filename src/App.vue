@@ -4,12 +4,14 @@
   </div>
   <list-modal-a v-if="$globalProps.$modalMode.type === 'A'"></list-modal-a>
   <list-modal-b v-if="$globalProps.$modalMode.type === 'B'"></list-modal-b>
+  <list-modal-c v-if="$globalProps.$modalMode.type === 'C'"></list-modal-c>
 </template>
 
 <script setup lang="ts">
 import { defineComponent, inject, nextTick, watch } from "vue";
 import ListModalA from "./components/ListModalA.vue";
 import ListModalB from "./components/ListModalB.vue";
+import ListModalC from "./components/ListModalC.vue";
 const $globalProps: any = inject("$globalProps");
 const DOC = document.documentElement;
 defineComponent({
@@ -22,6 +24,12 @@ defineComponent({
   name: "ListModalB",
   components: {
     ListModalB,
+  },
+});
+defineComponent({
+  name: "ListModalC",
+  components: {
+    ListModalC,
   },
 });
 

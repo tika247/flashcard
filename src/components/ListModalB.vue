@@ -10,9 +10,22 @@
         </ul>
 
         <div class="modal__btnWrap">
-          <button type="submit" class="modal__btn" @click="submitNewWord">
-            Done
-          </button>
+          <list-btn-a
+            :filename="'icon-close.svg'"
+            :altText="'Cancel'"
+            :widthNum="'20'"
+            :heightNum="'20'"
+            :sizeClass="'is-large'"
+            @click="closeModal"
+          ></list-btn-a>
+          <list-btn-a
+            :filename="'icon-done.svg'"
+            :altText="'Done'"
+            :widthNum="'30'"
+            :heightNum="'18'"
+            :sizeClass="'is-large'"
+            @click="submitNewWord"
+          ></list-btn-a>
         </div>
       </div>
     </div>
@@ -20,9 +33,17 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import { ref, Ref, inject, onMounted } from "vue";
+import ListBtnA from "./ListBtnA.vue";
+import { ref, Ref, inject, onMounted, defineComponent } from "vue";
 const $globalProps: any = inject("$globalProps");
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
+
+defineComponent({
+  name: "ListBtnA",
+  components: {
+    ListBtnA,
+  },
+});
 
 // Ref
 const modal: Ref<HTMLDialogElement | null> = ref(null);
@@ -72,6 +93,14 @@ const clickOverlay = (e: Event) => {
   if (e.target === modal.value) {
     $globalProps.$modalMode.type = false;
   }
+};
+
+/**
+ * @description close modal
+ * @returns {void}
+ */
+const closeModal = () => {
+  $globalProps.$modalMode.type = false;
 };
 
 /**
@@ -147,6 +176,7 @@ const submitNewWord = async () => {
     background-color: $color-brighter;
     color: #fff;
     box-shadow: 0 0 16px $color-darker;
+    text-align: center;
   }
 
   &__list {
@@ -175,27 +205,9 @@ const submitNewWord = async () => {
   }
 
   &__btnWrap {
-    text-align: center;
-  }
-
-  &__btn {
-    width: 56px;
-    height: 56px;
     display: inline-flex;
     justify-content: center;
-    align-items: center;
-    background-color: $color-01;
-    color: #fff;
-    box-shadow: $shadow;
-    border-radius: 50%;
-    transition: 0.3s background-color ease-in-out, 0.3s transform ease-in-out;
-
-    &:hover,
-    &:active,
-    &:focus {
-      transform: scale(1.3);
-      background-color: $color-brighter;
-    }
+    gap: 0 32px;
   }
 }
 </style>

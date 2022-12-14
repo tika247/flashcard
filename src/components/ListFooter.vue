@@ -1,6 +1,6 @@
 <template>
   <footer class="list-footer" :class="{ 'is-panel': !mode }">
-    <list-btn
+    <list-btn-a
       @click="openModal('A')"
       v-if="!returnIsSelectMode"
       :filename="'icon-add.svg'"
@@ -8,8 +8,8 @@
       :widthNum="'16'"
       :heightNum="'20'"
     >
-    </list-btn>
-    <list-btn
+    </list-btn-a>
+    <list-btn-a
       @click="startSelectMode('edit')"
       v-if="!returnIsSelectMode"
       :filename="'icon-edit.svg'"
@@ -17,17 +17,17 @@
       :widthNum="'19'"
       :heightNum="'19'"
     >
-    </list-btn>
-    <list-btn
+    </list-btn-a>
+    <list-btn-a
       @click="startSelectMode('remove')"
       v-if="!returnIsSelectMode"
-      :filename="'icon-delete.svg'"
+      :filename="'icon-remove.svg'"
       :altText="'remove a word'"
       :widthNum="'19'"
       :heightNum="'20'"
     >
-    </list-btn>
-    <list-btn
+    </list-btn-a>
+    <list-btn-a
       @click="closeSelectMode"
       v-if="returnIsSelectMode"
       :filename="'icon-close.svg'"
@@ -35,17 +35,24 @@
       :widthNum="'14'"
       :heightNum="'14'"
     >
-    </list-btn>
+    </list-btn-a>
   </footer>
 </template>
 <script setup lang="ts">
-import ListBtn from "./ListBtn.vue";
-import { defineProps, inject, computed } from "vue";
+import ListBtnA from "./ListBtnA.vue";
+import { defineProps, defineComponent, inject, computed } from "vue";
 const DOC = document.documentElement;
 const $globalProps: any = inject("$globalProps");
 
 defineProps({
   mode: Boolean,
+});
+
+defineComponent({
+  name: "ListBtnA",
+  components: {
+    ListBtnA,
+  },
 });
 
 const openModal = (type: string) => {

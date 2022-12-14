@@ -66,9 +66,12 @@ const returnIsSelectMode = computed((): boolean => {
 });
 
 const openModal = (i: number) => {
+  $globalProps.$modalMode.index = i;
+
   if ($globalProps.$isSelectMode === "edit") {
     $globalProps.$modalMode.type = "B";
-    $globalProps.$modalMode.index = i;
+  } else if ($globalProps.$isSelectMode === "remove") {
+    $globalProps.$modalMode.type = "C";
   }
 };
 </script>

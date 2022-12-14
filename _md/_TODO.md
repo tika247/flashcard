@@ -1,6 +1,7 @@
 ## next
 
-- when edit btn clicked, change mode in `ListTableMode` and  `ListPanelMode`
+- create `Done btn` in `ListModalB`
+- remove funtion in `ListModalC`
 
 ## todo
 
