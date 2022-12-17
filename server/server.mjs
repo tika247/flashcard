@@ -11,6 +11,7 @@ import helper from "./modules/helper.mjs"
 import mGetApi from "./modules/getApi.mjs"
 import mPostAddNewWord from "./modules/postAddNewWord.mjs"
 import mPostRemoveWord from "./modules/postRemoveWord.mjs"
+import mPostEditWord from "./modules/postEditWord.mjs"
 const __filename = fileURLToPath(
   import.meta.url);
 
@@ -57,6 +58,11 @@ const __filename = fileURLToPath(
    * @description Add new word
    */
   app.use("/addNewWord", mPostAddNewWord);
+
+  /**
+   * @description Edit word
+   */
+  app.use("/editWord", mPostEditWord);
 
   /**
    * @description Remove word

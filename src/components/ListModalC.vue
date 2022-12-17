@@ -60,10 +60,7 @@ const submitRemoveWord = async () => {
     alert("Error: Couldn't get API!");
     return;
   }
-  $word.value = await apiController.removeWord(
-    $word,
-    $globalProps.$modalMode.index
-  );
+  $word.value = await apiController.removeWord($globalProps.$modalMode.index);
 
   $globalProps.$modalMode.type = false;
   $globalProps.$isSelectMode = false;

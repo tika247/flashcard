@@ -90,7 +90,7 @@ const submitNewWord = async () => {
     alert("Error: Couldn't get API!");
     return;
   }
-  $word.value = await apiController.addNewWord($word, newWordInfo);
+  $word.value = await apiController.addNewWord(newWordInfo);
 
   if (!textareas?.length) {
     return;

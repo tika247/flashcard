@@ -24,7 +24,7 @@
             :widthNum="'30'"
             :heightNum="'18'"
             :sizeClass="'is-large'"
-            @click="submitNewWord"
+            @click="submitEditWord"
           ></list-btn-a>
         </div>
       </div>
@@ -35,6 +35,7 @@
 import axios from "axios";
 import ListBtnA from "./ListBtnA.vue";
 import { ref, Ref, inject, onMounted, defineComponent } from "vue";
+import apiController from "../helper/apiController";
 const $globalProps: any = inject("$globalProps");
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
@@ -49,7 +50,7 @@ defineComponent({
 const modal: Ref<HTMLDialogElement | null> = ref(null);
 
 // Type
-interface newWordInfoType {
+interface editWordInfoType {
   [key: string]: string;
 }
 
@@ -107,7 +108,7 @@ const closeModal = () => {
  * @description return new word info
  * @returns {object} wordInfo
  */
-const returnNewWordInfo = (): Array<string> | undefined => {
+const returnEditWordInfo = (): Array<string> | undefined => {
   if (!textareas?.length) {
     return;
   }
@@ -120,33 +121,31 @@ const returnNewWordInfo = (): Array<string> | undefined => {
  * @description submit new word info to server-side
  * @returns {Promise}
  */
-const submitNewWord = async () => {
-  const enteredWordInfo: Array<string> | undefined = returnNewWordInfo();
+const submitEditWord = async () => {
+  const enteredWordInfo: Array<string> | undefined = returnEditWordInfo();
   if (!enteredWordInfo) {
     return;
   }
-  let newWordInfo: newWordInfoType = {};
+  let editWordInfo: editWordInfoType = {};
   for (let i = 0; i < modalList.length; i++) {
-    newWordInfo[modalList[i]] = enteredWordInfo[i];
+    editWordInfo[modalList[i]] = enteredWordInfo[i];
   }
 
-  await axios
-    .post("/addNewWord", newWordInfo)
-    .then((res) => {
-      if ($word) {
-        $word.value = res.data;
+  if (!$word) {
+    alert("Error: Couldn't get API!");
+    return;
+  }
+  $word.value = await apiController.editWord(
+    editWordInfo,
+    $globalProps.$modalMode.index
+  );
 
-        if (!textareas?.length) {
-          return;
-        }
-        for (const el of textareas) {
-          el.value = "";
-        }
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  if (!textareas?.length) {
+    return;
+  }
+  for (const el of textareas) {
+    el.value = "";
+  }
 
   $globalProps.$modalMode.type = false;
   $globalProps.$isSelectMode = false;
