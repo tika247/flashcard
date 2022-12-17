@@ -7,8 +7,8 @@
       @slideChange="onSlideChange"
       :breakpoints="breakpoints"
     >
-      <swiper-slide v-for="item in $word" :key="item.word">
-        <panel-card-b :data="item" :flip="true"></panel-card-b>
+      <swiper-slide v-for="(item, i) in $word" :key="item.word">
+        <panel-card-b :data="item" :selfIndex="i"></panel-card-b>
       </swiper-slide>
 
       ...
@@ -21,6 +21,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import PanelCardB from "../components/PanelCardB.vue";
+const $globalProps: any = inject("$globalProps");
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
 defineComponent({
@@ -70,6 +71,22 @@ const breakpoints = {
     slidesPerView: 4.5,
     spaceBetween: 72,
   },
+};
+
+/**
+ * @description open modal
+ * @param i
+ */
+const openModal = (i: number) => {
+  $globalProps.$modalMode.index = i;
+
+  if ($globalProps.$isSelectMode === "edit") {
+    $globalProps.$modalMode.type = "B";
+    $globalProps.$modalMode.index = i;
+  } else if ($globalProps.$isSelectMode === "remove") {
+    $globalProps.$modalMode.type = "C";
+    $globalProps.$modalMode.index = i;
+  }
 };
 </script>
 

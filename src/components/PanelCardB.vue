@@ -1,14 +1,16 @@
 <template>
-  <li
-    class="panel"
-    :class="{ 'is-clicked': isClicked }"
-    @click="
-      {
-        isClicked = !isClicked;
-      }
-    "
-  >
-    <button class="panel__btn">
+  <li class="panel">
+    <button
+      class="panel__btn"
+      :class="{
+        'is-clicked': returnIsPanelReversed,
+        'is-selectMode': $globalProps.$isSelectMode,
+      }"
+      @click="
+        switchIsClicked();
+        openModal();
+      "
+    >
       <svg viewBox="0 0 400 532" class="panel__bg">
         <use xlink:href="#thunderB"></use>
       </svg>
@@ -36,18 +38,59 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, Ref, ref } from "vue";
+import { defineProps, Ref, ref, inject, computed } from "vue";
+const $globalProps: any = inject("$globalProps");
 
-defineProps({
+const props = defineProps({
   data: Object,
+  selfIndex: Number,
 });
 
-const isClicked: Ref<boolean> = ref(false);
+let isClicked: Ref<boolean> = ref(false);
 
+/**
+ * @description get key value
+ * @param {object} obj
+ * @returns {object}
+ */
 const getKeyValue = (obj: WordType) => {
   const pair = Object.entries(obj);
 
   return pair;
+};
+
+/**
+ * @description condition of panel reversed
+ */
+const returnIsPanelReversed = computed(() => {
+  return isClicked.value && !$globalProps.$isSelectMode ? true : false;
+});
+
+/**
+ * @description switch isClicked
+ */
+const switchIsClicked = () => {
+  isClicked.value = !isClicked.value;
+};
+
+/**
+ * @description open modal
+ * @param i
+ */
+const openModal = () => {
+  if (!$globalProps.$isSelectMode) {
+    return;
+  }
+
+  $globalProps.$modalMode.index = props.selfIndex;
+
+  if ($globalProps.$isSelectMode === "edit") {
+    $globalProps.$modalMode.type = "B";
+    $globalProps.$modalMode.index = props.selfIndex;
+  } else if ($globalProps.$isSelectMode === "remove") {
+    $globalProps.$modalMode.type = "C";
+    $globalProps.$modalMode.index = props.selfIndex;
+  }
 };
 </script>
 
@@ -55,13 +98,6 @@ const getKeyValue = (obj: WordType) => {
 .panel {
   $root: &;
   width: 100%;
-
-  &.is-clicked {
-    #{$root}__btn {
-      transform: rotateY(180deg);
-      box-shadow: $shadow-reverse;
-    }
-  }
 
   &__btn {
     position: relative;
@@ -75,6 +111,19 @@ const getKeyValue = (obj: WordType) => {
     backface-visibility: visible;
     transition: 0.5s ease-in-out;
     will-change: transform;
+
+    &.is-clicked {
+      transform: rotateY(180deg);
+      box-shadow: $shadow-reverse;
+    }
+
+    &.is-selectMode {
+      transition: transform 0.3s ease-in-out;
+
+      @include hover {
+        transform: scale(1.05);
+      }
+    }
   }
 
   &__front,

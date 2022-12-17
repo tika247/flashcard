@@ -32,7 +32,6 @@
   </dialog>
 </template>
 <script setup lang="ts">
-import axios from "axios";
 import ListBtnA from "./ListBtnA.vue";
 import { ref, Ref, inject, onMounted, defineComponent } from "vue";
 import apiController from "../helper/apiController";
@@ -102,6 +101,7 @@ const clickOverlay = (e: Event) => {
  */
 const closeModal = () => {
   $globalProps.$modalMode.type = false;
+  $globalProps.$isSelectMode = false;
 };
 
 /**
@@ -162,6 +162,7 @@ const submitEditWord = async () => {
   backdrop-filter: blur(5px);
   padding: $distance-01 0;
   overflow-y: auto;
+  z-index: 1000;
   &::backdrop {
     backdrop-filter: blur(5px);
   }

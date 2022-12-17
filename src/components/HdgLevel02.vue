@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
 
-const props = defineProps({
+defineProps({
   hdg: String,
   text: String,
 });

@@ -113,6 +113,7 @@ const submitNewWord = async () => {
   backdrop-filter: blur(5px);
   padding: $distance-01 0;
   overflow-y: auto;
+  z-index: 1000;
   &::backdrop {
     backdrop-filter: blur(5px);
   }

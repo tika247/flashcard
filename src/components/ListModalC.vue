@@ -80,6 +80,7 @@ const submitRemoveWord = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
   &::backdrop {
     backdrop-filter: blur(5px);
   }

@@ -65,6 +65,10 @@ const returnIsSelectMode = computed((): boolean => {
   return $globalProps.$isSelectMode;
 });
 
+/**
+ * @description open modal
+ * @param i
+ */
 const openModal = (i: number) => {
   $globalProps.$modalMode.index = i;
 
