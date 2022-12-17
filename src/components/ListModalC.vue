@@ -29,7 +29,9 @@
 // import axios from "axios";
 import ListBtnA from "./ListBtnA.vue";
 import { ref, Ref, defineComponent, inject } from "vue";
+import apiController from "../helper/apiController";
 const $globalProps: any = inject("$globalProps");
+const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
 defineComponent({
   name: "ListBtnA",
@@ -54,7 +56,14 @@ const closeModal = () => {
  * @returns {Promise}
  */
 const submitRemoveWord = async () => {
-  alert($globalProps.$modalMode.index);
+  if (!$word) {
+    alert("Error: Couldn't get API!");
+    return;
+  }
+  $word.value = await apiController.removeWord(
+    $word,
+    $globalProps.$modalMode.index
+  );
 
   $globalProps.$modalMode.type = false;
   $globalProps.$isSelectMode = false;

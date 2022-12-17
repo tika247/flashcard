@@ -9,7 +9,8 @@ import {
 } from 'url';
 import helper from "./modules/helper.mjs"
 import mGetApi from "./modules/getApi.mjs"
-import mPostNewWord from "./modules/postNewWord.mjs"
+import mPostAddNewWord from "./modules/postAddNewWord.mjs"
+import mPostRemoveWord from "./modules/postRemoveWord.mjs"
 const __filename = fileURLToPath(
   import.meta.url);
 
@@ -53,9 +54,14 @@ const __filename = fileURLToPath(
   app.use("/api/", mGetApi);
 
   /**
-   * @description Add new-word
+   * @description Add new word
    */
-  app.use("/addNewWord", mPostNewWord);
+  app.use("/addNewWord", mPostAddNewWord);
+
+  /**
+   * @description Remove word
+   */
+  app.use("/removeWord", mPostRemoveWord);
 
   /**
    * @description activate server

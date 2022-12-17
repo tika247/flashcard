@@ -26,6 +26,27 @@ const apiController: any = {
 
     return returnData;
   },
+  /**
+   * @description remove word
+   */
+  removeWord: async (
+    $word: any,
+    removeTargetIndex: number
+  ): Promise<WordType | null> => {
+    let returnData = null;
+    await axios
+      .post("/removeWord", { data: removeTargetIndex })
+      .then((res) => {
+        if ($word) {
+          returnData = res.data;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    return returnData;
+  },
 };
 
 export default apiController;
