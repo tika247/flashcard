@@ -5,6 +5,7 @@
 ## todo
 
 - when server close, update latest data to `/api/api.json`
+- using [Service Worker](https://laboradian.com/create-offline-site-using-sw/), set it work even in offline
 
 ## check
 

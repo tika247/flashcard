@@ -2,7 +2,7 @@
   <div class="list-lyt">
     <hdg-Level02
       :hdg="'Word List'"
-      :text="`${wordTotal} Words Registered`"
+      :text="`${returnWordTotal} Words Registered`"
     ></hdg-Level02>
     <div class="list-setting">
       <ul class="list-setting__mode">
@@ -40,20 +40,12 @@
 </template>
 
 <script setup lang="ts">
-import {
-  defineComponent,
-  inject,
-  ref,
-  Ref,
-  UnwrapNestedRefs,
-  computed,
-} from "vue";
+import { defineComponent, inject, ref, Ref, computed } from "vue";
 import ListContents from "../components/ListContents.vue";
 import HdgLevel02 from "../components/HdgLevel02.vue";
 import ListFooter from "../components/ListFooter.vue";
 import ThunderB from "../components/symbol/ThunderB.vue";
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
-const wordTotal = $word?.value?.length;
 
 defineComponent({
   name: "ThunderB",
@@ -78,6 +70,10 @@ defineComponent({
   components: {
     HdgLevel02,
   },
+});
+
+const returnWordTotal = computed(() => {
+  return $word?.value?.length;
 });
 
 let modeNormal: Ref<boolean> = ref(true);
