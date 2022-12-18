@@ -1,6 +1,9 @@
 ## next
 
-- check if remove funtion works well in `ListPanelMode`
+- make panel reverse by clicking in `QuizContent`
+- inactivate next btn if OK or Miss is not clicked in `QuizContent`
+- inactivate next btn if OK or Miss is not clicked in `QuizContent`
+- activate OK or Miss btn by clicking
 
 ## todo
 

@@ -8,10 +8,10 @@
       <ul class="list-setting__mode">
         <li>
           <button
-            :class="{ 'is-current': modeNormal }"
+            :class="{ 'is-current': modePanel }"
             @click="
               {
-                modeNormal = true;
+                modePanel = true;
               }
             "
           >
@@ -20,10 +20,10 @@
         </li>
         <li>
           <button
-            :class="{ 'is-current': !modeNormal }"
+            :class="{ 'is-current': !modePanel }"
             @click="
               {
-                modeNormal = false;
+                modePanel = false;
               }
             "
           >
@@ -33,9 +33,9 @@
       </ul>
     </div>
 
-    <list-contents :mode="modeNormal"></list-contents>
+    <list-contents :mode="modePanel"></list-contents>
   </div>
-  <list-footer :mode="modeNormal"></list-footer>
+  <list-footer :mode="modePanel"></list-footer>
   <thunderB></thunderB>
 </template>
 
@@ -76,7 +76,7 @@ const returnWordTotal = computed(() => {
   return $word?.value?.length;
 });
 
-let modeNormal: Ref<boolean> = ref(true);
+let modePanel: Ref<boolean> = ref(true);
 </script>
 
 <style lang="scss" scoped>

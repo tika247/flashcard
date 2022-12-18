@@ -4,22 +4,22 @@
       <div class="modal__content">
         <p class="modal__text">Do you really remove?</p>
         <div class="modal__btnWrap">
-          <list-btn-a
+          <btn-a
             :filename="'icon-close.svg'"
             :altText="'Cancel'"
             :widthNum="'20'"
             :heightNum="'20'"
-            :sizeClass="'is-large'"
+            :sizeClass="'is-medium'"
             @click="closeModal"
-          ></list-btn-a>
-          <list-btn-a
+          ></btn-a>
+          <btn-a
             :filename="'icon-remove.svg'"
             :altText="'Remove a word'"
             :widthNum="'24'"
             :heightNum="'24'"
-            :sizeClass="'is-large'"
+            :sizeClass="'is-medium'"
             @click="submitRemoveWord"
-          ></list-btn-a>
+          ></btn-a>
         </div>
       </div>
     </div>
@@ -27,16 +27,16 @@
 </template>
 <script setup lang="ts">
 // import axios from "axios";
-import ListBtnA from "./ListBtnA.vue";
+import BtnA from "./BtnA.vue";
 import { ref, Ref, defineComponent, inject } from "vue";
 import apiController from "../helper/apiController";
 const $globalProps: any = inject("$globalProps");
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
 defineComponent({
-  name: "ListBtnA",
+  name: "BtnA",
   components: {
-    ListBtnA,
+    BtnA,
   },
 });
 

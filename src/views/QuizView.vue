@@ -1,68 +1,38 @@
 <template>
   <div class="quiz-lyt">
-    <hdg-Level02 :hdg="'Word Quiz'" :text="'Select Quiz Mode'"></hdg-Level02>
+    <hdg-Level02 :hdg="'Word Quiz'" :text="returnSubTitle"></hdg-Level02>
     <ul class="quiz-panel-list" v-if="!quizMode">
       <panel-card-a
         :text="'Review'"
+        :is-select-mode="true"
         @click="
           {
-            quizMode = 'Review';
+            quizMode = 'preview';
           }
         "
       ></panel-card-a>
       <panel-card-a
         :text="'Rondom'"
+        :is-select-mode="true"
         @click="
           {
-            quizMode = 'Rondom';
+            quizMode = 'random';
           }
         "
       ></panel-card-a>
     </ul>
 
-    <div class="quiz-contents" v-else>
-      <div class="quiz-item">
-        <div class="quiz-item__num">Q1</div>
-        <panel-card-a :text="'taunt'"></panel-card-a>
-      </div>
-
-      <ul class="quiz-controller">
-        <li>
-          <button class="list-footer__btn">
-            <img src="@/assets/img/icon-ok.svg" alt="" width="22" height="33" />
-          </button>
-        </li>
-        <li>
-          <button class="list-footer__btn">
-            <img
-              src="@/assets/img/icon-miss.svg"
-              alt=""
-              width="22"
-              height="33"
-            />
-          </button>
-        </li>
-        <li>
-          <button class="list-footer__btn">
-            <img
-              src="@/assets/img/icon-next.svg"
-              alt=""
-              width="22"
-              height="33"
-            />
-          </button>
-        </li>
-      </ul>
-    </div>
+    <quiz-contents :mode="quizMode" v-else></quiz-contents>
   </div>
   <thunderB></thunderB>
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref, Ref } from "vue";
+import { defineComponent, ref, Ref, computed } from "vue";
 import ThunderB from "../components/symbol/ThunderB.vue";
 import PanelCardA from "../components/PanelCardA.vue";
 import HdgLevel02 from "../components/HdgLevel02.vue";
+import QuizContents from "../components/QuizContents.vue";
 
 defineComponent({
   name: "ThunderB",
@@ -85,7 +55,31 @@ defineComponent({
   },
 });
 
-const quizMode: Ref<string | null> = ref(null);
+defineComponent({
+  name: "QuizContents",
+  components: {
+    QuizContents,
+  },
+});
+
+/**
+ * @description return subTitle text to switch according to mode
+ * @returns {string}
+ */
+const returnSubTitle = computed(() => {
+  let returnString = null;
+  if (quizMode.value === "preview") {
+    returnString = "Preview Mode";
+  } else if (quizMode.value === "random") {
+    returnString = "Random Mode";
+  } else {
+    returnString = "Select Quiz Mode";
+  }
+
+  return returnString;
+});
+
+let quizMode: Ref<string | undefined> = ref(undefined);
 </script>
 
 <style lang="scss" scoped>
@@ -105,51 +99,5 @@ h2 {
 .quiz-panel-list {
   display: flex;
   gap: 0 80px;
-}
-
-.quiz-contents {
-  margin-top: calc(-1 * $distance-02);
-  > *:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.quiz-item {
-  > *:last-child {
-    margin-bottom: 0;
-  }
-
-  &__num {
-    font-size: $fontSize-04;
-    color: $color-05;
-    text-align: center;
-    font-weight: 500;
-    margin-bottom: $distance-03;
-  }
-}
-
-.quiz-controller {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0 40px;
-  margin-top: $distance-02;
-
-  > li {
-    > button {
-      width: 64px;
-      height: 64px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: $color-01;
-      box-shadow: $shadow;
-      border-radius: 50%;
-
-      > img {
-        margin-top: 4px;
-      }
-    }
-  }
 }
 </style>

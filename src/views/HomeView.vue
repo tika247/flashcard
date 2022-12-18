@@ -71,6 +71,12 @@ h1 {
       box-shadow: $shadow;
       border-radius: 4px;
       overflow: hidden;
+
+      transition: transform 0.3s ease-in-out;
+
+      @include hover {
+        transform: scale(1.05);
+      }
     }
 
     &__bg {

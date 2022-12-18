@@ -1,6 +1,6 @@
 <template>
   <footer class="list-footer" :class="{ 'is-panel': !mode }">
-    <list-btn-a
+    <btn-a
       @click="openModal('A')"
       v-if="!returnIsSelectMode"
       :filename="'icon-add.svg'"
@@ -8,8 +8,8 @@
       :widthNum="'16'"
       :heightNum="'20'"
     >
-    </list-btn-a>
-    <list-btn-a
+    </btn-a>
+    <btn-a
       @click="startSelectMode('edit')"
       v-if="!returnIsSelectMode"
       :filename="'icon-edit.svg'"
@@ -17,8 +17,8 @@
       :widthNum="'19'"
       :heightNum="'19'"
     >
-    </list-btn-a>
-    <list-btn-a
+    </btn-a>
+    <btn-a
       @click="startSelectMode('remove')"
       v-if="!returnIsSelectMode"
       :filename="'icon-remove.svg'"
@@ -26,8 +26,8 @@
       :widthNum="'19'"
       :heightNum="'20'"
     >
-    </list-btn-a>
-    <list-btn-a
+    </btn-a>
+    <btn-a
       @click="closeSelectMode"
       v-if="returnIsSelectMode"
       :filename="'icon-close.svg'"
@@ -35,11 +35,11 @@
       :widthNum="'14'"
       :heightNum="'14'"
     >
-    </list-btn-a>
+    </btn-a>
   </footer>
 </template>
 <script setup lang="ts">
-import ListBtnA from "./ListBtnA.vue";
+import BtnA from "./BtnA.vue";
 import { defineProps, defineComponent, inject, computed } from "vue";
 const DOC = document.documentElement;
 const $globalProps: any = inject("$globalProps");
@@ -49,9 +49,9 @@ defineProps({
 });
 
 defineComponent({
-  name: "ListBtnA",
+  name: "BtnA",
   components: {
-    ListBtnA,
+    BtnA,
   },
 });
 

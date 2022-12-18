@@ -6,6 +6,9 @@ const globalProps: GlobalPropsType = reactive({
     index: null,
   },
   $isSelectMode: false,
+  $quizMode: {
+    type: false,
+  },
 });
 
 export default globalProps;

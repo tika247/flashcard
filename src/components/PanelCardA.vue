@@ -1,6 +1,6 @@
 <template>
   <li class="panel">
-    <button>
+    <button :class="{ 'is-selectMode': isSelectMode }">
       <span>{{ text }}</span>
       <svg viewBox="0 0 400 532" class="panel__bg">
         <use xlink:href="#thunderB"></use>
@@ -12,8 +12,9 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
 
-const props = defineProps({
+defineProps({
   text: String,
+  isSelectMode: Boolean,
 });
 </script>
 
@@ -36,6 +37,14 @@ const props = defineProps({
       font-size: $fontSize-02;
       color: #fff;
       font-weight: 500;
+    }
+
+    &.is-selectMode {
+      transition: transform 0.3s ease-in-out;
+
+      @include hover {
+        transform: scale(1.05);
+      }
     }
   }
 

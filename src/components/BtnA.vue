@@ -39,9 +39,14 @@ defineProps({
     background-color: $color-brighter;
   }
 
-  &.is-large {
+  &.is-medium {
     width: 48px;
     height: 48px;
+  }
+
+  &.is-large {
+    width: 64px;
+    height: 64px;
   }
 }
 </style>

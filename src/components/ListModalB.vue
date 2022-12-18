@@ -10,38 +10,38 @@
         </ul>
 
         <div class="modal__btnWrap">
-          <list-btn-a
+          <btn-a
             :filename="'icon-close.svg'"
             :altText="'Cancel'"
             :widthNum="'20'"
             :heightNum="'20'"
-            :sizeClass="'is-large'"
+            :sizeClass="'is-medium'"
             @click="closeModal"
-          ></list-btn-a>
-          <list-btn-a
+          ></btn-a>
+          <btn-a
             :filename="'icon-done.svg'"
             :altText="'Done'"
             :widthNum="'30'"
             :heightNum="'18'"
-            :sizeClass="'is-large'"
+            :sizeClass="'is-medium'"
             @click="submitEditWord"
-          ></list-btn-a>
+          ></btn-a>
         </div>
       </div>
     </div>
   </dialog>
 </template>
 <script setup lang="ts">
-import ListBtnA from "./ListBtnA.vue";
+import BtnA from "./BtnA.vue";
 import { ref, Ref, inject, onMounted, defineComponent } from "vue";
 import apiController from "../helper/apiController";
 const $globalProps: any = inject("$globalProps");
 const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
 defineComponent({
-  name: "ListBtnA",
+  name: "BtnA",
   components: {
-    ListBtnA,
+    BtnA,
   },
 });
 
