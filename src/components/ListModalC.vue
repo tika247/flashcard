@@ -49,6 +49,7 @@ const modal: Ref<HTMLDialogElement | null> = ref(null);
  */
 const closeModal = () => {
   $globalProps.$modalMode.type = false;
+  $globalProps.$isSelectMode = false;
 };
 
 /**

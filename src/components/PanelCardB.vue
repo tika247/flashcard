@@ -82,6 +82,8 @@ const openModal = () => {
     return;
   }
 
+  isClicked.value = false;
+
   $globalProps.$modalMode.index = props.selfIndex;
 
   if ($globalProps.$isSelectMode === "edit") {

@@ -1,6 +1,6 @@
 ## next
 
-- remove funtion in `ListModalC` at lint-57
+- check if remove funtion works well in `ListPanelMode`
 
 ## todo
 
