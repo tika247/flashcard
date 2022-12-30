@@ -52,6 +52,7 @@ td {
     color: #fff;
     text-align: left;
     white-space: nowrap;
+
     &::-webkit-scrollbar {
       display: none;
     }

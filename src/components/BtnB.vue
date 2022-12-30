@@ -1,7 +1,15 @@
+<!-- Use only in QuizContents.vue -->
 <template>
-  <button class="btn" :class="[sizeClass, { 'is-inactive': isInactive }]">
+  <button
+    class="btn"
+    :class="[
+      sizeClass,
+      { 'is-inactive': isInactive },
+      { 'is-current': currentActiveBtn === filename },
+    ]"
+  >
     <img
-      :src="require(`@/assets/img/${filename}`)"
+      :src="require(`@/assets/img/icon-${filename}.svg`)"
       :alt="altText"
       :width="widthNum"
       :height="heightNum"
@@ -17,6 +25,7 @@ defineProps({
   widthNum: String,
   heightNum: String,
   sizeClass: String,
+  currentActiveBtn: String,
   isInactive: Boolean,
 });
 </script>
@@ -31,7 +40,9 @@ defineProps({
   background-color: $color-01;
   box-shadow: $shadow;
   border-radius: 50%;
-  transition: 0.3s background-color ease-in-out, 0.3s transform ease-in-out;
+  border: 1px solid transparent;
+  transition: 0.3s background-color ease-in-out, 0.3s transform ease-in-out,
+    0.3s opacity ease-in-out, 0.3s border ease-in-out;
 
   @include hover {
     transform: scale(1.1);
@@ -51,6 +62,10 @@ defineProps({
   &.is-inactive {
     opacity: 0.3;
     pointer-events: none;
+  }
+
+  &.is-current {
+    border: 1px solid $color-06;
   }
 }
 </style>

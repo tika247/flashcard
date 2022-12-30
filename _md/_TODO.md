@@ -1,12 +1,11 @@
 ## next
 
-- make panel reverse by clicking in `QuizContent`
-- inactivate next btn if OK or Miss is not clicked in `QuizContent`
-- inactivate next btn if OK or Miss is not clicked in `QuizContent`
-- activate OK or Miss btn by clicking
+- add understanding-state key in API
+    - adjust so that state would be reflected in `QuizContents`;
 
 ## todo
 
+- when panel reversed, not be able to scroll with ↑↓ key.
 - when server close, update latest data to `/api/api.json`
 - using [Service Worker](https://laboradian.com/create-offline-site-using-sw/), set it work even in offline
 

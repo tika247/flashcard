@@ -173,7 +173,7 @@ const submitNewWord = async () => {
     &:hover,
     &:active,
     &:focus {
-      transform: scale(1.3);
+      transform: scale(1.1);
       background-color: $color-brighter;
     }
   }

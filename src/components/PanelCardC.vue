@@ -1,33 +1,30 @@
 <template>
-  <li class="panel">
+  <li class="panel" v-if="wordData">
     <button
       class="panel__btn"
-      :class="{
-        'is-clicked': returnIsPanelReversed,
-        'is-selectMode': $globalProps.$isSelectMode,
-      }"
-      @click="
-        switchIsClicked();
-        openModal();
-      "
+      :class="{ 'is-clicked': isClicked }"
+      @click="switchIsClicked()"
     >
       <svg viewBox="0 0 400 532" class="panel__bg">
         <use xlink:href="#thunderB"></use>
       </svg>
-      <div class="panel__front">{{ data?.word }}</div>
+      <div class="panel__front">{{ wordData[0].word }}</div>
       <div class="panel__back">
         <table class="panel__table">
           <caption>
             information of
             {{
-              data?.word
+              wordData[0].word
             }}
           </caption>
           <colgroup>
             <col />
             <col />
           </colgroup>
-          <tr v-for="item in getKeyValue(data as WordType)" :key="item[0]">
+          <tr
+            v-for="item in getKeyValue(wordData[0] as WordType)"
+            :key="item[0]"
+          >
             <th>{{ item[0] }}</th>
             <td>{{ item[1] }}</td>
           </tr>
@@ -38,12 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, Ref, ref, inject, computed } from "vue";
-const $globalProps: any = inject("$globalProps");
+import { defineProps, Ref, ref } from "vue";
 
 const props = defineProps({
-  data: Object,
-  selfIndex: Number,
+  wordData: Object,
 });
 
 let isClicked: Ref<boolean> = ref(false);
@@ -54,51 +49,24 @@ let isClicked: Ref<boolean> = ref(false);
  * @returns {object}
  */
 const getKeyValue = (obj: WordType) => {
+  if (!props.wordData) {
+    return;
+  }
   const pair = Object.entries(obj);
 
   return pair;
 };
 
 /**
- * @description condition of panel reversed
- */
-const returnIsPanelReversed = computed(() => {
-  return isClicked.value && !$globalProps.$isSelectMode ? true : false;
-});
-
-/**
  * @description switch isClicked
  */
 const switchIsClicked = () => {
-  isClicked.value = !isClicked.value;
-};
-
-/**
- * @description open modal
- * @param i
- */
-const openModal = () => {
-  if (!$globalProps.$isSelectMode) {
-    return;
-  }
-
-  $globalProps.$modalMode.index = props.selfIndex;
-
-  if ($globalProps.$isSelectMode === "edit") {
-    $globalProps.$modalMode.type = "B";
-    $globalProps.$modalMode.index = props.selfIndex;
-  } else if ($globalProps.$isSelectMode === "remove") {
-    $globalProps.$modalMode.type = "C";
-    $globalProps.$modalMode.index = props.selfIndex;
-  }
+  isClicked.value = isClicked.value ? false : true;
 };
 </script>
 
 <style lang="scss" scoped>
 .panel {
-  $root: &;
-  width: 100%;
-
   &__btn {
     position: relative;
     display: block;
@@ -110,18 +78,15 @@ const openModal = () => {
     backface-visibility: visible;
     transition: 0.5s ease-in-out;
     will-change: transform;
+    transition: transform 0.3s ease-in-out;
+
+    @include hover {
+      transform: scale(1.05);
+    }
 
     &.is-clicked {
       transform: rotateY(180deg);
       box-shadow: $shadow-reverse;
-    }
-
-    &.is-selectMode {
-      transition: transform 0.3s ease-in-out;
-
-      @include hover {
-        transform: scale(1.05);
-      }
     }
   }
 
@@ -154,16 +119,18 @@ const openModal = () => {
     padding: 20px 24px;
     transform: rotateY(180deg);
     backdrop-filter: blur(5px);
-    overflow-y: auto;
+    overflow-y: scroll;
 
     // TODO: cannot scroll with mouse drag if ::-webkit-scrollbar
     // &::-webkit-scrollbar {
     //   width: 8px;
     //   transform: scaleY(0.8);
     // }
+
     // &::-webkit-scrollbar-track {
     //   background-color: $color-01;
     // }
+
     // &::-webkit-scrollbar-thumb {
     //   background-color: $color-04;
     //   border-radius: 5em;
@@ -174,6 +141,7 @@ const openModal = () => {
     display: block;
     width: 100%;
     height: 100%;
+    pointer-events: none;
   }
 
   &__table {

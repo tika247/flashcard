@@ -1,64 +1,126 @@
 <template>
   <div class="quiz-contents">
     <div class="quiz-item">
-      <div class="quiz-item__num">Q1</div>
-      <panel-card-a :text="'taunt'"></panel-card-a>
+      <div class="quiz-item__num">Q{{ quizNum }}</div>
+      <panel-card-c :wordData="returnPanelWordData"></panel-card-c>
     </div>
 
     <ul class="quiz-controller">
       <li>
-        <btn-a
-          :filename="'icon-ok.svg'"
+        <btn-b
+          :filename="'ok'"
           :altText="'No problem about this word'"
           :widthNum="'24'"
           :heightNum="'42'"
           :sizeClass="'is-large'"
+          :currentActiveBtn="currentActiveBtn"
+          @click="controllActiveBtn('ok')"
         >
-        </btn-a>
+        </btn-b>
       </li>
       <li>
-        <btn-a
-          :filename="'icon-miss.svg'"
+        <btn-b
+          :filename="'miss'"
           :altText="'Could not get this word so preview later'"
           :widthNum="'24'"
           :heightNum="'42'"
           :sizeClass="'is-large'"
+          :currentActiveBtn="currentActiveBtn"
+          @click="controllActiveBtn('miss')"
         >
-        </btn-a>
+        </btn-b>
       </li>
       <li>
-        <btn-a
-          :filename="'icon-next.svg'"
+        <btn-b
+          :filename="'next'"
           :altText="'Go to next word'"
           :widthNum="'24'"
           :heightNum="'42'"
           :sizeClass="'is-large'"
+          :isInactive="returnNextBtnState"
+          @click="goToNextQuiz"
         >
-        </btn-a>
+        </btn-b>
       </li>
     </ul>
   </div>
 </template>
 <script setup lang="ts">
-import { defineComponent, defineProps } from "vue";
-import PanelCardA from "../components/PanelCardA.vue";
-import BtnA from "./BtnA.vue";
+import { defineComponent, defineProps, Ref, ref, inject, computed } from "vue";
+import PanelCardC from "../components/PanelCardC.vue";
+import BtnB from "./BtnB.vue";
+const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
 
 defineComponent({
-  name: "PanelCardA",
+  name: "PanelCardC",
   components: {
-    PanelCardA,
+    PanelCardC,
   },
 });
 defineComponent({
-  name: "BtnA",
+  name: "BtnB",
   components: {
-    BtnA,
+    BtnB,
   },
 });
-defineProps({
+const props = defineProps({
   mode: String,
 });
+
+// Ref
+// TODO: adjust value if the word has ok or miss state in API
+const currentActiveBtn: Ref<undefined | string> = ref(undefined);
+const quizNum: Ref<number> = ref(1);
+
+/**
+ * @description decide data to show
+ */
+const returnPanelWordData = computed(() => {
+  if (!($word && $word.value)) {
+    return;
+  }
+  let returnData = null;
+  if (quizNum.value) {
+    console.log("Next Btn Clicked");
+  }
+  if (props.mode === "random") {
+    const index = Math.floor(Math.random() * $word.value.length);
+    returnData = [$word.value[index], index];
+  } else if (props.mode === "preview") {
+    const index = 0;
+    returnData = [$word.value[index], index];
+  }
+
+  // TODO: what if not to use `as`
+  return returnData as Array<WordType | null>;
+});
+
+/**
+ * @description activate next button
+ */
+const controllActiveBtn = (str: string) => {
+  currentActiveBtn.value = str;
+};
+
+/**
+ * @description return next-btn's active state
+ */
+const returnNextBtnState = computed(() => {
+  if (currentActiveBtn.value) {
+    return;
+  }
+
+  return true;
+});
+
+/**
+ * @description go to next quiz
+ * @todo reflect state of either of OK or Miss onto API
+ */
+const goToNextQuiz = () => {
+  quizNum.value += 1;
+  currentActiveBtn.value = undefined;
+};
 </script>
 
 <style scoped lang="scss">
