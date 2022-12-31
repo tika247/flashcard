@@ -10,4 +10,5 @@ interface WordType {
   japanese: string;
   example: string;
   note: string;
+  state: string;
 }

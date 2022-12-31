@@ -2,7 +2,7 @@
   <div class="quiz-contents">
     <div class="quiz-item">
       <div class="quiz-item__num">Q{{ quizNum }}</div>
-      <panel-card-c :wordData="returnPanelWordData"></panel-card-c>
+      <panel-card-c :wordData="currentWord"></panel-card-c>
     </div>
 
     <ul class="quiz-controller">
@@ -46,10 +46,19 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineComponent, defineProps, Ref, ref, inject, computed } from "vue";
+import {
+  defineComponent,
+  defineProps,
+  Ref,
+  ref,
+  inject,
+  computed,
+  watch,
+} from "vue";
 import PanelCardC from "../components/PanelCardC.vue";
 import BtnB from "./BtnB.vue";
-const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
+// const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
+const $word: any = inject("$word");
 
 defineComponent({
   name: "PanelCardC",
@@ -68,21 +77,17 @@ const props = defineProps({
 });
 
 // Ref
-// TODO: adjust value if the word has ok or miss state in API
-const currentActiveBtn: Ref<undefined | string> = ref(undefined);
 const quizNum: Ref<number> = ref(1);
+let currentActiveBtn: Ref<undefined | string> = ref(undefined);
 
 /**
  * @description decide data to show
  */
 const returnPanelWordData = computed(() => {
-  if (!($word && $word.value)) {
+  if (!($word && $word.value && quizNum.value)) {
     return;
   }
   let returnData = null;
-  if (quizNum.value) {
-    console.log("Next Btn Clicked");
-  }
   if (props.mode === "random") {
     const index = Math.floor(Math.random() * $word.value.length);
     returnData = [$word.value[index], index];
@@ -96,6 +101,12 @@ const returnPanelWordData = computed(() => {
 });
 
 /**
+ * @description current word
+ */
+// const currentWord: ComputedRef<Array<WordType | null> | undefined> =
+const currentWord: any = returnPanelWordData;
+
+/**
  * @description activate next button
  */
 const controllActiveBtn = (str: string) => {
@@ -106,21 +117,29 @@ const controllActiveBtn = (str: string) => {
  * @description return next-btn's active state
  */
 const returnNextBtnState = computed(() => {
-  if (currentActiveBtn.value) {
-    return;
-  }
-
-  return true;
+  return currentActiveBtn.value ? false : true;
 });
 
 /**
  * @description go to next quiz
- * @todo reflect state of either of OK or Miss onto API
  */
 const goToNextQuiz = () => {
+  if (!($word && $word.value && currentWord.value)) {
+    return;
+  }
+  $word.value[currentWord.value[1]].state = currentActiveBtn.value;
   quizNum.value += 1;
   currentActiveBtn.value = undefined;
 };
+
+/**
+ * @description watch currentWord changes, to reflect  onto an inicial btn state
+ */
+watch(currentWord, () => {
+  currentActiveBtn.value = currentWord.value[0].state
+    ? currentWord.value[0].state
+    : undefined;
+});
 </script>
 
 <style scoped lang="scss">
