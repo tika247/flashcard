@@ -57,8 +57,7 @@ import {
 } from "vue";
 import PanelCardC from "../components/PanelCardC.vue";
 import BtnB from "./BtnB.vue";
-// const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
-const $word: any = inject("$word");
+const $word: Ref<Array<WordType>> = inject("$word") as Ref<Array<WordType>>;
 
 defineComponent({
   name: "PanelCardC",
@@ -75,6 +74,7 @@ defineComponent({
 const props = defineProps({
   mode: String,
 });
+const currentMode: Ref<string> = ref(props.mode) as Ref<string>;
 
 // Ref
 const quizNum: Ref<number> = ref(1);
@@ -87,23 +87,45 @@ const returnPanelWordData = computed(() => {
   if (!($word && $word.value && quizNum.value)) {
     return;
   }
-  let returnData = null;
-  if (props.mode === "random") {
-    const index = Math.floor(Math.random() * $word.value.length);
-    returnData = [$word.value[index], index];
-  } else if (props.mode === "preview") {
-    const index = 0;
-    returnData = [$word.value[index], index];
-  }
 
   // TODO: what if not to use `as`
-  return returnData as Array<WordType | null>;
+  return returnRandomWord() as unknown as Array<WordType | null>;
 });
+
+/**
+ * @description return random word
+ */
+const returnRandomWord = (): Array<WordType | number> | void => {
+  let returnWord = null;
+
+  if (currentMode.value === "random") {
+    const index = Math.floor(Math.random() * $word.value.length);
+    returnWord = [$word.value[index], index];
+  }
+
+  if (currentMode.value === "preview") {
+    const onlyMissWord = $word.value.filter(
+      (obj: WordType) => obj.state === "miss"
+    );
+    if (!onlyMissWord.length) {
+      alert(
+        "You don't have any word checked as 'miss'.\nLet's move to random mode!"
+      );
+      currentMode.value = "random";
+
+      return;
+    }
+    const index = Math.floor(Math.random() * onlyMissWord.length);
+    const indexOfAll = $word.value.indexOf(onlyMissWord[index]);
+    returnWord = [onlyMissWord[index], indexOfAll];
+  }
+
+  return returnWord as Array<WordType | number>;
+};
 
 /**
  * @description current word
  */
-// const currentWord: ComputedRef<Array<WordType | null> | undefined> =
 const currentWord: any = returnPanelWordData;
 
 /**
