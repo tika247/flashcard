@@ -22,17 +22,19 @@
       ></panel-card-a>
     </ul>
 
-    <quiz-contents :mode="quizMode" v-else></quiz-contents>
+    <quiz-contents ref="child" :mode="quizMode" v-else></quiz-contents>
   </div>
   <thunderB></thunderB>
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref, Ref, computed } from "vue";
+import { defineComponent, ref, Ref, computed, watch, onUpdated } from "vue";
 import ThunderB from "../components/symbol/ThunderB.vue";
 import PanelCardA from "../components/PanelCardA.vue";
 import HdgLevel02 from "../components/HdgLevel02.vue";
 import QuizContents from "../components/QuizContents.vue";
+
+const child: any = ref(null);
 
 defineComponent({
   name: "ThunderB",
@@ -79,7 +81,11 @@ const returnSubTitle = computed(() => {
   return returnString;
 });
 
-let quizMode: Ref<string | undefined> = ref(undefined);
+// TODO: 親のrefによって子でdefineExposeされた値にアクセス。子での変更を反映するには？
+let quizMode: Ref<string | undefined> = ref("");
+onUpdated(() => {
+  quizMode.value = child?.value?.currentMode;
+});
 </script>
 
 <style lang="scss" scoped>

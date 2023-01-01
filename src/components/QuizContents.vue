@@ -54,6 +54,7 @@ import {
   inject,
   computed,
   watch,
+  defineExpose,
 } from "vue";
 import PanelCardC from "../components/PanelCardC.vue";
 import BtnB from "./BtnB.vue";
@@ -71,10 +72,15 @@ defineComponent({
     BtnB,
   },
 });
+
+// Props
 const props = defineProps({
   mode: String,
 });
 const currentMode: Ref<string> = ref(props.mode) as Ref<string>;
+defineExpose({
+  currentMode,
+});
 
 // Ref
 const quizNum: Ref<number> = ref(1);
@@ -83,50 +89,60 @@ let currentActiveBtn: Ref<undefined | string> = ref(undefined);
 /**
  * @description decide data to show
  */
-const returnPanelWordData = computed(() => {
+const returnCurrentWord = computed(() => {
   if (!($word && $word.value && quizNum.value)) {
     return;
   }
+  let returnWord = null;
 
+  if (currentMode.value === "preview") {
+    returnWord = returnPreviewWord();
+  } else if (currentMode.value === "random") {
+    returnWord = returnRandomWord();
+  }
   // TODO: what if not to use `as`
-  return returnRandomWord() as unknown as Array<WordType | null>;
+  return returnWord as unknown as Array<WordType | null>;
 });
 
 /**
- * @description return random word
+ * @description return word in preview mode
  */
-const returnRandomWord = (): Array<WordType | number> | void => {
+const returnPreviewWord = (): Array<WordType | number> | void => {
   let returnWord = null;
 
-  if (currentMode.value === "random") {
-    const index = Math.floor(Math.random() * $word.value.length);
-    returnWord = [$word.value[index], index];
-  }
-
-  if (currentMode.value === "preview") {
-    const onlyMissWord = $word.value.filter(
-      (obj: WordType) => obj.state === "miss"
-    );
-    if (!onlyMissWord.length) {
-      alert(
-        "You don't have any word checked as 'miss'.\nLet's move to random mode!"
-      );
-      currentMode.value = "random";
-
-      return;
-    }
+  const onlyMissWord = $word.value.filter(
+    (obj: WordType) => obj.state === "miss"
+  );
+  if (onlyMissWord.length) {
     const index = Math.floor(Math.random() * onlyMissWord.length);
     const indexOfAll = $word.value.indexOf(onlyMissWord[index]);
     returnWord = [onlyMissWord[index], indexOfAll];
+  } else {
+    alert(
+      "You don't have any word checked as 'miss'.\nLet's move to random mode!"
+    );
+    currentMode.value = "random";
+    quizNum.value = 1;
+    currentActiveBtn.value = undefined;
+    const index = Math.floor(Math.random() * $word.value.length);
+    returnWord = [$word.value[index], index];
   }
 
   return returnWord as Array<WordType | number>;
 };
 
 /**
+ * @description return word in random mode
+ */
+const returnRandomWord = (): Array<WordType | number> | void => {
+  const index = Math.floor(Math.random() * $word.value.length);
+  return [$word.value[index], index];
+};
+
+/**
  * @description current word
  */
-const currentWord: any = returnPanelWordData;
+const currentWord: any = returnCurrentWord;
 
 /**
  * @description activate next button

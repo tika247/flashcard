@@ -17,3 +17,9 @@ const apiData = JSON.parse(fs.readFileSync(`${process.cwd()}/dist/api/api.json`,
 - NodeList is static
 - HTMLCollection is dynamic
 - when the origin changes, only HTMLCollection reflects it
+
+## is
+
+to change component dynamically
+
+https://devsakaso.com/vue-js-component-is-attribute/
