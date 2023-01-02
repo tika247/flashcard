@@ -1,13 +1,13 @@
 <template>
   <div class="quiz-lyt">
     <hdg-Level02 :hdg="'Word Quiz'" :text="returnSubTitle"></hdg-Level02>
-    <ul class="quiz-panel-list" v-if="!quizMode">
+    <ul class="quiz-panel-list" v-if="!currentQuizMode">
       <panel-card-a
         :text="'Review'"
         :is-select-mode="true"
         @click="
           {
-            quizMode = 'preview';
+            currentQuizMode = 'preview';
           }
         "
       ></panel-card-a>
@@ -16,25 +16,27 @@
         :is-select-mode="true"
         @click="
           {
-            quizMode = 'random';
+            currentQuizMode = 'random';
           }
         "
       ></panel-card-a>
     </ul>
 
-    <quiz-contents ref="child" :mode="quizMode" v-else></quiz-contents>
+    <quiz-contents
+      @eventUpdateMode="updateCurrentQuizMode"
+      :mode="currentQuizMode"
+      v-else
+    ></quiz-contents>
   </div>
   <thunderB></thunderB>
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref, Ref, computed, watch, onUpdated } from "vue";
+import { defineComponent, ref, Ref, computed } from "vue";
 import ThunderB from "../components/symbol/ThunderB.vue";
 import PanelCardA from "../components/PanelCardA.vue";
 import HdgLevel02 from "../components/HdgLevel02.vue";
 import QuizContents from "../components/QuizContents.vue";
-
-const child: any = ref(null);
 
 defineComponent({
   name: "ThunderB",
@@ -64,15 +66,18 @@ defineComponent({
   },
 });
 
+// Ref
+let currentQuizMode: Ref<string | undefined> = ref("");
+
 /**
  * @description return subTitle text to switch according to mode
  * @returns {string}
  */
 const returnSubTitle = computed(() => {
   let returnString = null;
-  if (quizMode.value === "preview") {
+  if (currentQuizMode.value === "preview") {
     returnString = "Preview Mode";
-  } else if (quizMode.value === "random") {
+  } else if (currentQuizMode.value === "random") {
     returnString = "Random Mode";
   } else {
     returnString = "Select Quiz Mode";
@@ -81,11 +86,13 @@ const returnSubTitle = computed(() => {
   return returnString;
 });
 
-// TODO: 親のrefによって子でdefineExposeされた値にアクセス。子での変更を反映するには？
-let quizMode: Ref<string | undefined> = ref("");
-onUpdated(() => {
-  quizMode.value = child?.value?.currentMode;
-});
+/**
+ * @description update current
+ * @param newMode
+ */
+const updateCurrentQuizMode = (newMode: any) => {
+  currentQuizMode.value = newMode.value;
+};
 </script>
 
 <style lang="scss" scoped>

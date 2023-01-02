@@ -1,7 +1,7 @@
 <template>
   <div class="quiz-contents">
     <div class="quiz-item">
-      <div class="quiz-item__num">Q{{ quizNum }}</div>
+      <div class="quiz-item__num">Q{{ currentQuizNum }}</div>
       <panel-card-c :wordData="currentWord"></panel-card-c>
     </div>
 
@@ -54,7 +54,7 @@ import {
   inject,
   computed,
   watch,
-  defineExpose,
+  defineEmits,
 } from "vue";
 import PanelCardC from "../components/PanelCardC.vue";
 import BtnB from "./BtnB.vue";
@@ -73,35 +73,36 @@ defineComponent({
   },
 });
 
+// Ref
+const currentQuizNum: Ref<number> = ref(1);
+let currentActiveBtn: Ref<undefined | string> = ref(undefined);
+
 // Props
 const props = defineProps({
   mode: String,
 });
-const currentMode: Ref<string> = ref(props.mode) as Ref<string>;
-defineExpose({
-  currentMode,
-});
+const currentQuizMode: Ref<string> = ref(props.mode) as Ref<string>;
 
-// Ref
-const quizNum: Ref<number> = ref(1);
-let currentActiveBtn: Ref<undefined | string> = ref(undefined);
+/**
+ * @description emit currentQuizMode
+ */
+const emit = defineEmits(["eventUpdateMode"]);
+watch(currentQuizMode, () => {
+  emit("eventUpdateMode", currentQuizMode);
+});
 
 /**
  * @description decide data to show
  */
-const returnCurrentWord = computed(() => {
-  if (!($word && $word.value && quizNum.value)) {
-    return;
-  }
+const returnCurrentWord = computed((): Array<WordType | number> => {
   let returnWord = null;
 
-  if (currentMode.value === "preview") {
+  if (currentQuizMode.value === "preview") {
     returnWord = returnPreviewWord();
-  } else if (currentMode.value === "random") {
+  } else if (currentQuizMode.value === "random") {
     returnWord = returnRandomWord();
   }
-  // TODO: what if not to use `as`
-  return returnWord as unknown as Array<WordType | null>;
+  return returnWord as Array<WordType | number>;
 });
 
 /**
@@ -121,8 +122,8 @@ const returnPreviewWord = (): Array<WordType | number> | void => {
     alert(
       "You don't have any word checked as 'miss'.\nLet's move to random mode!"
     );
-    currentMode.value = "random";
-    quizNum.value = 1;
+    currentQuizMode.value = "random";
+    currentQuizNum.value = 1;
     currentActiveBtn.value = undefined;
     const index = Math.floor(Math.random() * $word.value.length);
     returnWord = [$word.value[index], index];
@@ -166,12 +167,13 @@ const goToNextQuiz = () => {
     return;
   }
   $word.value[currentWord.value[1]].state = currentActiveBtn.value;
-  quizNum.value += 1;
+  currentQuizNum.value += 1;
   currentActiveBtn.value = undefined;
 };
 
 /**
  * @description watch currentWord changes, to reflect  onto an inicial btn state
+ * @todo In preview mode, reflect the state on a btn to designate the state
  */
 watch(currentWord, () => {
   currentActiveBtn.value = currentWord.value[0].state

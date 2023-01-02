@@ -23,3 +23,7 @@ const apiData = JSON.parse(fs.readFileSync(`${process.cwd()}/dist/api/api.json`,
 to change component dynamically
 
 https://devsakaso.com/vue-js-component-is-attribute/
+
+## Communication between parent component and the child
+
+https://webxreal.com/vue3-parent-child-data-communication/
