@@ -15,8 +15,8 @@ const apiController: any = {
       .then((res) => {
         returnData = res.data;
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
 
     return returnData;
@@ -31,8 +31,8 @@ const apiController: any = {
       .then((res) => {
         returnData = res.data;
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
 
     return returnData;
@@ -50,11 +50,26 @@ const apiController: any = {
       .then((res) => {
         returnData = res.data;
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
 
     return returnData;
+  },
+  /**
+   * @description put word before the page closed
+   */
+  putWord: async (putWordData: any) => {
+    await axios
+      .post("/putWord", putWordData)
+      .then((res) => {
+        if (res.data) {
+          console.log("Putting data is correctly done!");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 
