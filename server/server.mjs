@@ -12,7 +12,6 @@ import mGetApi from "./modules/getApi.mjs"
 import mPostAddNewWord from "./modules/postAddNewWord.mjs"
 import mPostRemoveWord from "./modules/postRemoveWord.mjs"
 import mPostEditWord from "./modules/postEditWord.mjs"
-import mPutWord from "./modules/putWord.mjs"
 const __filename = fileURLToPath(
   import.meta.url);
 
@@ -31,7 +30,6 @@ const __filename = fileURLToPath(
   app.use('/img', express.static(`${__dirname}/dist/img/`));
   app.use('/css', express.static(`${__dirname}/dist/css/`));
   app.use('/js', express.static(`${__dirname}/dist/js/`));
-  app.use(express.static(`${__dirname}/public/api/`)); // To overWrite
 
   /**
    * @description JSON manipulation
@@ -65,11 +63,6 @@ const __filename = fileURLToPath(
    * @description Edit word
    */
   app.use("/editWord", mPostEditWord);
-
-  /**
-   * @description Put word
-   */
-  app.use("/putWord", mPutWord);
 
   /**
    * @description Remove word

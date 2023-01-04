@@ -1,23 +1,17 @@
 /**
- * @description before the page closed, put word-data as the new. 
- * @param {object} req.body.data
- * @param {number} req.body.index
+ * @description put word-data and overwrite the api file 
+ * @param {object} wordData - latest word data
  */
-import fs from "fs/promises";
-import express from "express";
-const mPutWord = express.Router();
+import fs from "fs";
 
-mPutWord.post("/", async (req, res, next) => {
-  const updateData = JSON.stringify(req.app.get("wordData"));
-  const apiFiles = "public/api/api.json";
-  console.log(updateData);
-  try {
-    await fs.writeFile(apiFiles, updateData);
-  } catch (err) {
-    console.log(err.message);
-  }
-  res.send(updateData);
-  next();
-});
+const distPath = `${process.cwd()}/dist/api/api.json`;
+const publicPath = `${process.cwd()}/public/api/api.json`;
 
-export default mPutWord;
+export const putWord = (wordData) => {
+  fs.writeFile(distPath, wordData, (err) => {
+    if (err) console.log("Cannot put into a dist api file!");
+  });
+  fs.writeFile(publicPath, wordData, (err) => {
+    if (err) console.log("Cannot put into a public api file!");
+  });
+}
