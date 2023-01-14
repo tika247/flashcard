@@ -163,7 +163,7 @@ const returnNextBtnState = computed(() => {
  * @description go to next quiz
  */
 const goToNextQuiz = () => {
-  if (!($word && $word.value && currentWord.value)) {
+  if (!currentWord.value) {
     return;
   }
   $word.value[currentWord.value[1]].state = currentActiveBtn.value;

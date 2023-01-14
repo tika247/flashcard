@@ -4,7 +4,7 @@
       <div class="modal__content">
         <ul class="modal__list">
           <li v-for="item in modalList" :key="item">
-            <span>{{ item }}</span>
+            <span :data-itemName="item">{{ item }}</span>
             <textarea :name="item" :id="item"></textarea>
           </li>
         </ul>
@@ -24,7 +24,7 @@
             :widthNum="'30'"
             :heightNum="'18'"
             :sizeClass="'is-medium'"
-            @click="submitEditWord"
+            @click="startEditProcess"
           ></btn-a>
         </div>
       </div>
@@ -32,11 +32,11 @@
   </dialog>
 </template>
 <script setup lang="ts">
+import apiController from "../helper/apiController";
 import BtnA from "./BtnA.vue";
 import { ref, Ref, inject, onMounted, defineComponent } from "vue";
-import apiController from "../helper/apiController";
 const $globalProps: any = inject("$globalProps");
-const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
+const $word = inject("$word") as Ref<Array<WordType>>;
 
 defineComponent({
   name: "BtnA",
@@ -48,37 +48,29 @@ defineComponent({
 // Ref
 const modal: Ref<HTMLDialogElement | null> = ref(null);
 
-// Type
-interface editWordInfoType {
-  [key: string]: string;
-}
-
 const modalList: Array<string> = [
   "word",
   "japanese",
   "meaning",
   "example",
   "note",
+  "state",
 ];
 
 // HTMLCollection of textareas
 let textareas: HTMLCollectionOf<HTMLTextAreaElement> | undefined = undefined;
-onMounted(() => {
-  textareas = modal.value?.getElementsByTagName("textarea");
-  reflectTargetInfo();
-});
 
 /**
  * @description reflect edit target word info into textareas
  * @returns {void}
  */
 const reflectTargetInfo = () => {
-  if (!textareas || !$word?.value) {
+  if (!textareas) {
     return;
   }
-  const target = $word.value[$globalProps.$modalMode.index];
   for (let i = 0; i < textareas.length; i++) {
-    textareas[i].value = Object.values(target)[i];
+    const editTarget = $word.value[$globalProps.$modalMode.index];
+    textareas[i].value = Object.values(editTarget)[i];
   }
 };
 
@@ -121,24 +113,20 @@ const returnEditWordInfo = (): Array<string> | undefined => {
  * @description submit new word info to server-side
  * @returns {Promise}
  */
-const submitEditWord = async () => {
+const startEditProcess = async () => {
   const enteredWordInfo: Array<string> | undefined = returnEditWordInfo();
   if (!enteredWordInfo) {
+    alert("Error: Couldn't get API!");
     return;
   }
-  let editWordInfo: editWordInfoType = {};
+
+  let editWordInfo: any = {};
   for (let i = 0; i < modalList.length; i++) {
     editWordInfo[modalList[i]] = enteredWordInfo[i];
   }
 
-  if (!$word) {
-    alert("Error: Couldn't get API!");
-    return;
-  }
-  $word.value = await apiController.editWord(
-    editWordInfo,
-    $globalProps.$modalMode.index
-  );
+  $word.value[$globalProps.$modalMode.index] = editWordInfo;
+  apiController.putWord($word.value);
 
   if (!textareas?.length) {
     return;
@@ -150,6 +138,14 @@ const submitEditWord = async () => {
   $globalProps.$modalMode.type = false;
   $globalProps.$isSelectMode = false;
 };
+
+/**
+ * @description onMounted
+ */
+onMounted(() => {
+  textareas = modal.value?.getElementsByTagName("textarea");
+  reflectTargetInfo();
+});
 </script>
 
 <style scoped lang="scss">
@@ -200,6 +196,17 @@ const submitEditWord = async () => {
         border-color: $color-01;
         color: $color-03;
         padding: 8px;
+      }
+
+      > span[data-itemName="state"],
+      > textarea[name="state"] {
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
       }
     }
   }

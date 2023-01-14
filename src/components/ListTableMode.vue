@@ -48,7 +48,7 @@
 import ListWord from "./ListWord.vue";
 import { defineComponent, inject, Ref, computed } from "vue";
 const $globalProps: any = inject("$globalProps");
-const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
+const $word = inject("$word") as Ref<Array<WordType>>;
 
 defineComponent({
   name: "ListWord",

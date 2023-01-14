@@ -4,13 +4,13 @@
       <div class="modal__content">
         <ul class="modal__list">
           <li v-for="item in modalList" :key="item">
-            <span>{{ item }}</span>
+            <span :data-itemName="item">{{ item }}</span>
             <textarea :name="item" :id="item"></textarea>
           </li>
         </ul>
 
         <div class="modal__btnWrap">
-          <button type="submit" class="modal__btn" @click="submitNewWord">
+          <button type="submit" class="modal__btn" @click="startAddProcess">
             add
           </button>
         </div>
@@ -22,22 +22,18 @@
 import apiController from "../helper/apiController";
 import { ref, Ref, inject, onMounted } from "vue";
 const $globalProps: any = inject("$globalProps");
-const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
+const $word = inject("$word") as Ref<Array<WordType>>;
 
 // Ref
 const modal: Ref<HTMLDialogElement | null> = ref(null);
 
-// Type
-interface newWordInfoType {
-  [key: string]: string;
-}
-
 const modalList: Array<string> = [
   "word",
-  "japanese",
   "meaning",
+  "japanese",
   "example",
   "note",
+  "state",
 ];
 
 // HTMLCollection of textareas
@@ -63,7 +59,7 @@ const clickOverlay = (e: Event) => {
  * @description return new word info
  * @returns {object} wordInfo
  */
-const returnNewWordInfo = (): Array<string> | undefined => {
+const returnAddWordInfo = (): Array<string> | undefined => {
   if (!textareas?.length) {
     return;
   }
@@ -73,24 +69,22 @@ const returnNewWordInfo = (): Array<string> | undefined => {
 };
 
 /**
- * @description submit new word info to server-side
+ * @description add new word
  * @returns {Promise}
  */
-const submitNewWord = async () => {
-  const enteredWordInfo: Array<string> | undefined = returnNewWordInfo();
+const startAddProcess = async () => {
+  const enteredWordInfo: Array<string> | undefined = returnAddWordInfo();
   if (!enteredWordInfo) {
-    return;
-  }
-  let newWordInfo: newWordInfoType = {};
-  for (let i = 0; i < modalList.length; i++) {
-    newWordInfo[modalList[i]] = enteredWordInfo[i];
-  }
-
-  if (!$word) {
     alert("Error: Couldn't get API!");
     return;
   }
-  $word.value = await apiController.addNewWord(newWordInfo);
+  let addWordInfo: any = {};
+  for (let i = 0; i < modalList.length; i++) {
+    addWordInfo[modalList[i]] = enteredWordInfo[i];
+  }
+
+  $word.value.push(addWordInfo);
+  apiController.putWord($word.value);
 
   if (!textareas?.length) {
     return;
@@ -150,6 +144,17 @@ const submitNewWord = async () => {
         border-color: $color-01;
         color: $color-03;
         padding: 8px;
+      }
+
+      > span[data-itemName="state"],
+      > textarea[name="state"] {
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
       }
     }
   }

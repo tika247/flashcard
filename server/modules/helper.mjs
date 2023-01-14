@@ -11,12 +11,12 @@ const helper = {
         value = newValue;
         this.watchChangeFunc(newValue);
       },
+      watchChangeFunc: (newValue) => {
+        console.log(newValue);
+      },
       configurable: true
     });
   },
-  watchChangeFunc: (newValue) => {
-    console.log(newValue);
-  }
 }
 
 export default helper;

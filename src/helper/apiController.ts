@@ -4,71 +4,86 @@ const apiController: any = {
   /**
    * @description add new word
    * @param $word
-   * @param newWordInfo
+   * @param addWordInfo
    * @returns {object} returnData
-   * @example await apiController.addNewWord($globalProps, $word, newWordInfo);
+   * @example await apiController.addWord($globalProps, $word, addWordInfo);
    */
-  addNewWord: async (newWordInfo: any): Promise<WordType | null> => {
-    let returnData = null;
+  addWord: async (addWordInfo: WordType): Promise<string | void> => {
     await axios
-      .post("/addNewWord", newWordInfo)
+      .post("/addWord", addWordInfo)
       .then((res) => {
-        returnData = res.data;
+        if (!res || !res.data) {
+          throw new Error(
+            "Error: Something Wrong with addWord in  apiController.ts"
+          );
+        }
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
+        return;
       });
 
-    return returnData;
+    return "addWord is scceeded!";
   },
   /**
    * @description remove word
    */
-  removeWord: async (removeTargetIndex: number): Promise<WordType | null> => {
-    let returnData = null;
+  removeWord: async (removeTargetIndex: number): Promise<string | void> => {
     await axios
       .post("/removeWord", { data: removeTargetIndex })
       .then((res) => {
-        returnData = res.data;
+        if (!res || !res.data) {
+          throw new Error(
+            "Error: Something Wrong with removeWord in  apiController.ts"
+          );
+        }
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
+        return;
       });
 
-    return returnData;
+    return "removeWord is scceeded!";
   },
   /**
    * @description edit word
    */
   editWord: async (
-    editWordInfo: any,
+    editWordInfo: WordType,
     editTargetIndex: number
-  ): Promise<WordType | null> => {
-    let returnData = null;
+  ): Promise<string | void> => {
     await axios
       .post("/editWord", { data: editWordInfo, index: editTargetIndex })
       .then((res) => {
-        returnData = res.data;
+        if (!res || !res.data) {
+          throw new Error(
+            "Error: Something Wrong with removeWord in  apiController.ts"
+          );
+        }
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
+        return;
       });
 
-    return returnData;
+    return "editWord is scceeded!";
   },
   /**
    * @description put word before the page closed
    */
-  putWord: async (putWordData: any) => {
+  putWord: async (putWordData: WordType) => {
     await axios
-      .post("/putWord", putWordData)
+      .post("/putWord/", putWordData)
       .then((res) => {
-        if (res.data) {
-          console.log("Putting data is correctly done!");
+        if (!res || !res.data) {
+          throw new Error(
+            "Error: Something Wrong with putWord in  apiController.ts"
+          );
         }
       })
       .catch((err) => {
         console.log(err);
+        return;
       });
   },
 };

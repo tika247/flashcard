@@ -13,15 +13,19 @@ const $word: Ref<Array<WordType> | null> = ref(null);
   await axios
     .get(API_GET_URL)
     .then((res) => {
-      $word.value = res.data;
+      if (res && res.data) {
+        $word.value = res.data;
+      } else {
+        throw new Error("JSON file does not exsist or broken");
+      }
     })
     .catch((err) => {
-      console.log("JSON file does not exsist or broken", err);
+      alert(err);
     });
 
   const vm = createApp(App);
   vm.use(router);
   vm.provide("$globalProps", globalProps);
-  vm.provide("$word", $word);
+  vm.provide("$word", $word as Ref<Array<WordType>>);
   vm.mount("#app");
 })();

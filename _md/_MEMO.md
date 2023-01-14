@@ -97,3 +97,13 @@ const __fileName = "api.json";
 const __filePath = path.join(__dirName, __fileName);
 console.log(__filePath); // dist\api\api.json
 ```
+
+## how to type-annotation of object from 0
+
+```js 
+
+interface editWordInfoType {
+  [key: string]: string;
+}
+
+```

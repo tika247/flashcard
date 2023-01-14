@@ -45,7 +45,7 @@ import ListContents from "../components/ListContents.vue";
 import HdgLevel02 from "../components/HdgLevel02.vue";
 import ListFooter from "../components/ListFooter.vue";
 import ThunderB from "../components/symbol/ThunderB.vue";
-const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
+const $word = inject("$word") as Ref<Array<WordType>>;
 
 defineComponent({
   name: "ThunderB",
@@ -73,7 +73,7 @@ defineComponent({
 });
 
 const returnWordTotal = computed(() => {
-  return $word?.value?.length;
+  return $word.value.length;
 });
 
 let modePanel: Ref<boolean> = ref(true);

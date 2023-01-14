@@ -21,7 +21,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import PanelCardB from "../components/PanelCardB.vue";
-const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
+const $word = inject("$word") as Ref<Array<WordType>>;
 
 defineComponent({
   name: "SwiperArea",

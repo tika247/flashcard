@@ -18,7 +18,7 @@
             :widthNum="'24'"
             :heightNum="'24'"
             :sizeClass="'is-medium'"
-            @click="submitRemoveWord"
+            @click="startRemoveProcess"
           ></btn-a>
         </div>
       </div>
@@ -31,7 +31,7 @@ import BtnA from "./BtnA.vue";
 import { ref, Ref, defineComponent, inject } from "vue";
 import apiController from "../helper/apiController";
 const $globalProps: any = inject("$globalProps");
-const $word: Ref<Array<WordType> | null> | undefined = inject("$word");
+const $word = inject("$word") as Ref<Array<WordType>>;
 
 defineComponent({
   name: "BtnA",
@@ -56,12 +56,9 @@ const closeModal = () => {
  * @description submit new word info to server-side
  * @returns {Promise}
  */
-const submitRemoveWord = async () => {
-  if (!$word) {
-    alert("Error: Couldn't get API!");
-    return;
-  }
-  $word.value = await apiController.removeWord($globalProps.$modalMode.index);
+const startRemoveProcess = async () => {
+  $word.value.splice($globalProps.$modalMode.index, 1);
+  apiController.putWord($word.value);
 
   $globalProps.$modalMode.type = false;
   $globalProps.$isSelectMode = false;
