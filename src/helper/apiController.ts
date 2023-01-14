@@ -82,7 +82,7 @@ const apiController: any = {
         }
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
         return;
       });
   },

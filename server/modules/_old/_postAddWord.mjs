@@ -4,7 +4,7 @@
 import express from "express";
 import {
   putWord
-} from "./putWord.mjs"
+} from "../putWord.mjs"
 
 const mPostAddWord = express.Router();
 
