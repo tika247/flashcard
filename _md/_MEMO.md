@@ -107,3 +107,26 @@ interface editWordInfoType {
 }
 
 ```
+
+## howt to adjust Webpack Configuration in Vue-Cli project
+
+in `vue.config.js`
+
+```js 
+module.exports = {
+  // exclude specific files or folders from buindling
+  chainWebpack: config => { 
+    config.plugin('copy').tap(([options]) => {
+      options.patterns[0].globOptions.ignore.push('**/〇〇〇/**')
+      return [options]
+    })
+  },
+  // exclude specific files or folders from watching by change
+configureWebpack: {
+  watchOptions: {
+    ignored: /.*\.json/
+  }
+},
+};
+
+```

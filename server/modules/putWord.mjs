@@ -16,12 +16,12 @@ mPutWord.post("/", async (req, res, next) => {
     if (wordData) {
       const distPath = `${process.cwd()}/dist/api/api.json`;
       const publicPath = `${process.cwd()}/public/api/api.json`;
-      // fs.writeFile(distPath, wordData, (err) => {
-      //   if (err) console.log("Cannot put into a dist api file!");
-      // });
-      // fs.writeFile(publicPath, wordData, (err) => {
-      //   if (err) console.log("Cannot put into a public api file!");
-      // });
+      fs.writeFile(distPath, wordData, (err) => {
+        if (err) console.log("Cannot put into a dist api file!");
+      });
+      fs.writeFile(publicPath, wordData, (err) => {
+        if (err) console.log("Cannot put into a public api file!");
+      });
     } else {
       throw new Error("Error: something wrong with mPutWord in putWord!");
     }

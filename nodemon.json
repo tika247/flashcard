@@ -1,0 +1,9 @@
+{
+  "watch": [
+    "server/**/*.mjs"
+  ],
+  "ext": "mjs",
+  "ignore": [
+    "**/api/**"
+  ]
+}

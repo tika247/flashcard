@@ -1,4 +1,9 @@
 module.exports = {
+  configureWebpack: {
+    watchOptions: {
+      ignored: /.*\.json/
+    }
+  },
   css: {
     loaderOptions: {
       scss: {
