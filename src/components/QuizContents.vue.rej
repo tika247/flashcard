@@ -1,0 +1,9 @@
+diff a/src/components/QuizContents.vue b/src/components/QuizContents.vue	(rejected hunks)
+@@ -163,7 +163,6 @@
+  * @description go to next quiz
+  */
+ const goToNextQuiz = () => {
+-  if (!($word && $word.value && currentWord.value)) {
+   if (!currentWord.value) {
+     return;
+   }

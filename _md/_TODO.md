@@ -1,6 +1,6 @@
 ## next
 
-- server.mjs内でAxiosでAPIのデータをバックエンドから取得できるか確認
+- validate new word
 
 ## todo
 

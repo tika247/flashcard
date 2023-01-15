@@ -46,6 +46,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import apiController from "../helper/apiController";
 import {
   defineComponent,
   defineProps,
@@ -55,6 +56,8 @@ import {
   computed,
   watch,
   defineEmits,
+  ComputedRef,
+  onMounted,
 } from "vue";
 import PanelCardC from "../components/PanelCardC.vue";
 import BtnB from "./BtnB.vue";
@@ -94,21 +97,27 @@ watch(currentQuizMode, () => {
 /**
  * @description decide data to show
  */
-const returnCurrentWord = computed((): Array<WordType | number> => {
+const returnCurrentWord = computed((): [WordType, number] | void => {
   let returnWord = null;
+
+  // trigger of computed
+  if (!currentQuizNum.value) {
+    return;
+  }
 
   if (currentQuizMode.value === "preview") {
     returnWord = returnPreviewWord();
   } else if (currentQuizMode.value === "random") {
     returnWord = returnRandomWord();
   }
-  return returnWord as Array<WordType | number>;
+
+  return returnWord as [WordType, number];
 });
 
 /**
  * @description return word in preview mode
  */
-const returnPreviewWord = (): Array<WordType | number> | void => {
+const returnPreviewWord = (): [WordType, number] | void => {
   let returnWord = null;
 
   const onlyMissWord = $word.value.filter(
@@ -129,13 +138,13 @@ const returnPreviewWord = (): Array<WordType | number> | void => {
     returnWord = [$word.value[index], index];
   }
 
-  return returnWord as Array<WordType | number>;
+  return returnWord as [WordType, number];
 };
 
 /**
  * @description return word in random mode
  */
-const returnRandomWord = (): Array<WordType | number> | void => {
+const returnRandomWord = (): [WordType, number] | void => {
   const index = Math.floor(Math.random() * $word.value.length);
   return [$word.value[index], index];
 };
@@ -143,7 +152,7 @@ const returnRandomWord = (): Array<WordType | number> | void => {
 /**
  * @description current word
  */
-const currentWord: any = returnCurrentWord;
+const currentWord = returnCurrentWord as ComputedRef<[WordType, number]>;
 
 /**
  * @description activate next button
@@ -163,22 +172,31 @@ const returnNextBtnState = computed(() => {
  * @description go to next quiz
  */
 const goToNextQuiz = () => {
-  if (!currentWord.value) {
+  if (!currentWord || !currentWord.value) {
     return;
   }
   $word.value[currentWord.value[1]].state = currentActiveBtn.value;
   currentQuizNum.value += 1;
   currentActiveBtn.value = undefined;
+  apiController.putWord($word.value);
 };
+
+/**
+ * @description change current active btn
+ */
+const changeCurrentActiveBtn = () => {
+  currentActiveBtn.value = currentWord.value[0].state
+    ? currentWord.value[0].state
+    : undefined;
+};
+changeCurrentActiveBtn();
 
 /**
  * @description watch currentWord changes, to reflect  onto an inicial btn state
  * @todo In preview mode, reflect the state on a btn to designate the state
  */
 watch(currentWord, () => {
-  currentActiveBtn.value = currentWord.value[0].state
-    ? currentWord.value[0].state
-    : undefined;
+  changeCurrentActiveBtn();
 });
 </script>
 

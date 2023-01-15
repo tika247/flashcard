@@ -5,6 +5,9 @@
 import fs from "fs";
 import express from "express";
 
+const distPath = `${process.cwd()}/dist/api/api.json`;
+const publicPath = `${process.cwd()}/public/api/api.json`;
+
 const mPutWord = express.Router();
 
 mPutWord.post("/", async (req, res, next) => {
@@ -14,8 +17,6 @@ mPutWord.post("/", async (req, res, next) => {
 
   try {
     if (wordData) {
-      const distPath = `${process.cwd()}/dist/api/api.json`;
-      const publicPath = `${process.cwd()}/public/api/api.json`;
       fs.writeFile(distPath, wordData, (err) => {
         if (err) console.log("Cannot put into a dist api file!");
       });
