@@ -29,7 +29,7 @@
 // import axios from "axios";
 import BtnA from "./BtnA.vue";
 import { ref, Ref, defineComponent, inject } from "vue";
-import apiController from "../helper/apiController";
+import { putWord } from "../helper/apiController";
 const $globalProps: any = inject("$globalProps");
 const $word = inject("$word") as Ref<Array<WordType>>;
 
@@ -58,7 +58,7 @@ const closeModal = () => {
  */
 const startRemoveProcess = async () => {
   $word.value.splice($globalProps.$modalMode.index, 1);
-  apiController.putWord($word.value);
+  putWord($word.value);
 
   $globalProps.$modalMode.type = false;
   $globalProps.$isSelectMode = false;

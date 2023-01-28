@@ -19,7 +19,7 @@
   </dialog>
 </template>
 <script setup lang="ts">
-import apiController from "../helper/apiController";
+import { putWord } from "../helper/apiController";
 import { ref, Ref, inject, onMounted } from "vue";
 const $globalProps: any = inject("$globalProps");
 const $word = inject("$word") as Ref<Array<WordType>>;
@@ -74,17 +74,24 @@ const returnAddWordInfo = (): Array<string> | undefined => {
  */
 const startAddProcess = async () => {
   const enteredWordInfo: Array<string> | undefined = returnAddWordInfo();
+
   if (!enteredWordInfo) {
-    alert("Error: Couldn't get API!");
+    alert("Couldn't get the entered word!");
     return;
   }
+
+  if (!(enteredWordInfo[0].length > 0)) {
+    alert("Length of 'word' must be more than 1!");
+    return;
+  }
+
   let addWordInfo: any = {};
   for (let i = 0; i < modalList.length; i++) {
     addWordInfo[modalList[i]] = enteredWordInfo[i];
   }
 
   $word.value.push(addWordInfo);
-  apiController.putWord($word.value);
+  putWord($word.value);
 
   if (!textareas?.length) {
     return;

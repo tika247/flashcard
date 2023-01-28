@@ -32,7 +32,7 @@
   </dialog>
 </template>
 <script setup lang="ts">
-import apiController from "../helper/apiController";
+import { putWord } from "../helper/apiController";
 import BtnA from "./BtnA.vue";
 import { ref, Ref, inject, onMounted, defineComponent } from "vue";
 const $globalProps: any = inject("$globalProps");
@@ -126,7 +126,7 @@ const startEditProcess = async () => {
   }
 
   $word.value[$globalProps.$modalMode.index] = editWordInfo;
-  apiController.putWord($word.value);
+  putWord($word.value);
 
   if (!textareas?.length) {
     return;

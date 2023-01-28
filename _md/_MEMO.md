@@ -121,12 +121,17 @@ module.exports = {
       return [options]
     })
   },
-  // exclude specific files or folders from watching by change
+  // exclude specific files or folders from watching by saving a file
 configureWebpack: {
   watchOptions: {
     ignored: /.*\.json/
   }
 },
+ // exclude specific files or folders from watching by changing a file
+ devServer: {
+  hot: false,
+  liveReload: false
+ }
 };
 
 ```

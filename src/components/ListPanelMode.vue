@@ -42,13 +42,6 @@ defineComponent({
   },
 });
 
-const onSwiper = (swiper: any) => {
-  console.log(swiper);
-};
-const onSlideChange = () => {
-  console.log("slide change");
-};
-
 const breakpoints = {
   // win>=320px
   320: {

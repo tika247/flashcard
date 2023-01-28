@@ -46,7 +46,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import apiController from "../helper/apiController";
+import { putWord } from "../helper/apiController";
 import {
   defineComponent,
   defineProps,
@@ -57,7 +57,6 @@ import {
   watch,
   defineEmits,
   ComputedRef,
-  onMounted,
 } from "vue";
 import PanelCardC from "../components/PanelCardC.vue";
 import BtnB from "./BtnB.vue";
@@ -178,7 +177,7 @@ const goToNextQuiz = () => {
   $word.value[currentWord.value[1]].state = currentActiveBtn.value;
   currentQuizNum.value += 1;
   currentActiveBtn.value = undefined;
-  apiController.putWord($word.value);
+  putWord($word.value);
 };
 
 /**
