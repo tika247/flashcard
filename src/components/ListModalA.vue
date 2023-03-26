@@ -59,7 +59,7 @@ const clickOverlay = (e: Event) => {
  * return new word info
  * @returns {object} wordInfo
  */
-const returnAddWordInfo = (): Array<string> | undefined => {
+const returnNewWordInfo = (): Array<string> | undefined => {
   if (!textareas?.length) {
     return;
   }
@@ -73,7 +73,7 @@ const returnAddWordInfo = (): Array<string> | undefined => {
  * @returns {Promise}
  */
 const startAddProcess = async () => {
-  const enteredWordInfo: Array<string> | undefined = returnAddWordInfo();
+  const enteredWordInfo: Array<string> | undefined = returnNewWordInfo();
 
   if (!enteredWordInfo) {
     return;
@@ -87,19 +87,20 @@ const startAddProcess = async () => {
 
   // if a word registed already
   const alreadyCheck = $word.value.some(
-    (wordObj) => wordObj.word === enteredWordInfo[0]
+    (wordInfo) => wordInfo.word === enteredWordInfo[0]
   );
   if (alreadyCheck) {
     alert("The word is already registered!");
     return;
   }
 
-  let addWordInfo: objectKeyType<string> = {};
+  // if a word registed already
+  let newWordInfo: objectKeyType<string> = {};
   for (let i = 0; i < modalList.length; i++) {
-    addWordInfo[modalList[i]] = enteredWordInfo[i];
+    newWordInfo[modalList[i]] = enteredWordInfo[i];
   }
 
-  $word.value.push(addWordInfo);
+  $word.value.push(newWordInfo);
   putWord($word.value);
 
   if (!textareas?.length) {
