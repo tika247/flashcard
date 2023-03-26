@@ -14,5 +14,10 @@ interface WordType {
 }
 type PartialWordType = Partial<WordType>;
 interface objectKeyType<T> {
-  [key: string]: T
+  [key: string]: T;
+}
+
+// class Type
+interface DragControllerType {
+  init: (root: HTMLTableRowElement) => void;
 }

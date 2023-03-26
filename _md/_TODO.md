@@ -1,5 +1,6 @@
 ## next
 
+- make it possible to drag and widen areas in 
 - validate if enterd word is registered already
 - when panel reversed, not be able to scroll with ↑↓ key.
 - using [Service Worker](https://laboradian.com/create-offline-site-using-sw/), set it work even in offline

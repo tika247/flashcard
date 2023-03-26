@@ -5,11 +5,11 @@
         word list
       </caption>
       <colgroup>
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
+        <col
+          v-for="item in returnColWidth"
+          :key="item"
+          :style="`width: ${item}%;`"
+        />
       </colgroup>
 
       <thead>
@@ -29,9 +29,9 @@
           :class="{ 'is-clickable': returnIsSelectMode }"
           :tabindex="returnTabIndex"
           @click="openModal(i)"
+          ref="dragTarget"
         >
           <list-word
-            :check="false"
             :word="item.word"
             :meaning="item.meaning"
             :japanese="item.japanese"
@@ -46,7 +46,7 @@
 </template>
 <script setup lang="ts">
 import ListWord from "./ListWord.vue";
-import { defineComponent, inject, Ref, computed } from "vue";
+import { defineComponent, inject, ref, Ref, computed, onMounted } from "vue";
 const $globalProps: any = inject("$globalProps");
 const $word = inject("$word") as Ref<Array<WordType>>;
 
@@ -55,6 +55,14 @@ defineComponent({
   components: {
     ListWord,
   },
+});
+
+// ref
+const colWidth: Ref<Array<number>> = ref([10, 30, 20, 20, 20]);
+const dragTarget: Ref<Array<HTMLTableRowElement> | null> = ref(null);
+
+const returnColWidth = computed(() => {
+  return colWidth.value.map((num) => String(num));
 });
 
 const returnTabIndex = computed((): string => {
@@ -80,6 +88,155 @@ const openModal = (i: number) => {
     $globalProps.$modalMode.index = i;
   }
 };
+
+onMounted(() => {
+  if (!dragTarget.value) return;
+  for (const el of dragTarget.value) {
+    const dragController = new DragController(el);
+    dragController.init();
+  }
+});
+
+/**
+ * controll drag
+ * @param {HTMLTableRowElement} this.root
+ */
+class DragController implements DragControllerType {
+  klass: { [key: string]: string };
+  root: HTMLTableRowElement;
+  dragTarget: NodeListOf<HTMLTableElement>;
+  dragArea: Array<HTMLDivElement>;
+  dragging: {
+    trWidth: number;
+    index: number | null;
+    target: HTMLDivElement | null;
+    startPoint: number | null;
+  };
+  dragTargetLength: number | null;
+
+  constructor(root: HTMLTableRowElement) {
+    this.klass = {
+      dragTarget: "th, td",
+      dragArea: "v-dragArea",
+    };
+
+    this.root = root;
+    this.dragTarget = this.root.querySelectorAll(this.klass.dragTarget);
+    this.dragArea = [];
+    this.dragging = {
+      trWidth: this.root.clientWidth,
+      target: null,
+      index: null,
+      startPoint: null,
+    };
+    this.dragTargetLength = null;
+  }
+  async init() {
+    await this.setting();
+    this.addEvent();
+  }
+  async setting() {
+    await this.addDragArea();
+  }
+  async addDragArea() {
+    if (!this.dragTarget) return;
+    this.dragTargetLength = this.dragTarget.length - 1;
+
+    this.dragTarget.forEach((el: HTMLTableElement, i: number) => {
+      if (i !== this.dragTargetLength) {
+        const dragArea = document.createElement("div");
+        dragArea.classList.add(this.klass.dragArea);
+        this.dragArea.push(dragArea);
+        el.append(dragArea);
+      }
+    });
+  }
+  addEvent() {
+    // for (const el of this.dragArea) {
+    // }
+    this.dragDiv();
+  }
+  dragDiv() {
+    //el: HTMLDivElement
+    if (!this.root) return;
+    document.addEventListener(
+      "dragover",
+      (e) => {
+        e.preventDefault();
+      },
+      false
+    );
+    this.root.addEventListener("dragstart", (e: DragEvent) => {
+      const target = e.target;
+      if (
+        target instanceof HTMLDivElement &&
+        target.classList.contains(this.klass.dragArea)
+      ) {
+        target;
+        this.dragging["target"] = target;
+        this.dragging["index"] = this.dragArea.findIndex(
+          (item) => item === this.dragging["target"]
+        );
+        this.dragging["startPoint"] = this.root.clientWidth;
+        this.dragging["startPoint"] = e.pageX;
+      }
+    });
+    this.root.addEventListener("drag", (e: DragEvent) => {
+      if (
+        this.dragging["target"] !== e.target ||
+        !this.dragging["index"] ||
+        !this.dragging["startPoint"]
+      )
+        return;
+      const diff = this.dragging["startPoint"] - e.pageX;
+      const percentage = (diff / this.dragging["trWidth"]) * 100;
+      const sign = Math.sign(percentage);
+      if (sign === 0) return;
+      const swing = Math.abs(percentage);
+      // ↓ TODO: 右にドラッグする→右の要素が縮む
+      // ↓ TODO: 左にドラッグする→左の要素が縮む
+      colWidth.value = colWidth.value.map((num: number, i: number) => {
+        if (!this.dragTargetLength) return num;
+
+        let newNum = 0;
+        if (sign === 1) {
+          if (i === this.dragging["index"] || !this.dragging["index"]) {
+            newNum = num - swing;
+          } else if (i < this.dragging["index"]) {
+            newNum =
+              num + (swing / this.dragTargetLength - this.dragging["index"]);
+          } else {
+            newNum = num;
+          }
+        }
+
+        if (sign === -1) {
+          if (i === this.dragging["index"] || !this.dragging["index"]) {
+            newNum = num + swing;
+          } else if (i > this.dragging["index"]) {
+            newNum =
+              num - (swing / this.dragTargetLength - this.dragging["index"]);
+          } else {
+            newNum = num;
+          }
+        }
+
+        // TODO: ↓をなくしたときのエラーを解消する
+        // newNum = num;
+        return newNum;
+      });
+      // ↑ TODO: 右にドラッグする→右の要素が縮む
+      // ↑ TODO: 左にドラッグする→左の要素が縮む
+    });
+
+    this.root.addEventListener("dragend", (e: DragEvent) => {
+      if (this.dragging["target"] !== e.target || !this.dragging["startPoint"])
+        return;
+      this.dragging["target"] = null;
+      this.dragging["startPoint"] = null;
+    });
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -94,26 +251,6 @@ const openModal = (i: number) => {
     overflow: hidden;
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
-  }
-
-  > colgroup {
-    > col {
-      &:nth-child(1) {
-        width: 10%;
-      }
-      &:nth-child(2) {
-        width: 30%;
-      }
-      &:nth-child(3) {
-        width: 20%;
-      }
-      &:nth-child(4) {
-        width: 20%;
-      }
-      &:nth-child(5) {
-        width: 20%;
-      }
-    }
   }
 
   thead {
@@ -153,6 +290,7 @@ const openModal = (i: number) => {
     > tr {
       &.is-clickable {
         cursor: pointer;
+
         @include hover {
           background-color: rgba(134, 174, 163, 0.2);
         }

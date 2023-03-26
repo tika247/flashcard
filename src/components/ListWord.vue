@@ -19,7 +19,6 @@
 import { defineProps } from "vue";
 
 defineProps({
-  check: Boolean,
   word: String,
   meaning: String,
   japanese: String,
@@ -28,7 +27,7 @@ defineProps({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 th,
 td {
   position: relative;
@@ -43,6 +42,16 @@ td {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  > .v-dragArea {
+    width: 12px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: -8px;
+    cursor: col-resize;
+    z-index: 10;
   }
 
   > span {
