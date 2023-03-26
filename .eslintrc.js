@@ -21,6 +21,8 @@ module.exports = {
       files: ["*.ts", "*.vue"],
       rules: {
         "no-undef": "off",
+        "no-unreachable":
+          process.env.NODE_ENV === "production" ? "warn" : "off",
       },
     },
   ],

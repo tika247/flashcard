@@ -44,7 +44,7 @@ const props = defineProps({
 let isClicked: Ref<boolean> = ref(false);
 
 /**
- * @description get key value
+ * get key value
  * @param {object} obj
  * @returns {object}
  */
@@ -58,7 +58,7 @@ const getKeyValue = (obj: WordType) => {
 };
 
 /**
- * @description switch isClicked
+ * switch isClicked
  */
 const switchIsClicked = () => {
   isClicked.value = isClicked.value ? false : true;

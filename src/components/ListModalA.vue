@@ -43,7 +43,7 @@ onMounted(() => {
 });
 
 /**
- * @description detect if overlay is clicked
+ * detect if overlay is clicked
  * @returns {void}
  */
 const clickOverlay = (e: Event) => {
@@ -56,7 +56,7 @@ const clickOverlay = (e: Event) => {
 };
 
 /**
- * @description return new word info
+ * return new word info
  * @returns {object} wordInfo
  */
 const returnAddWordInfo = (): Array<string> | undefined => {
@@ -69,23 +69,32 @@ const returnAddWordInfo = (): Array<string> | undefined => {
 };
 
 /**
- * @description add new word
+ * add new word
  * @returns {Promise}
  */
 const startAddProcess = async () => {
   const enteredWordInfo: Array<string> | undefined = returnAddWordInfo();
 
   if (!enteredWordInfo) {
-    alert("Couldn't get the entered word!");
     return;
   }
 
+  // if no word
   if (!(enteredWordInfo[0].length > 0)) {
-    alert("Length of 'word' must be more than 1!");
+    alert("Please fill in the blank of 'Word'!");
     return;
   }
 
-  let addWordInfo: any = {};
+  // if a word registed already
+  const alreadyCheck = $word.value.some(
+    (wordObj) => wordObj.word === enteredWordInfo[0]
+  );
+  if (alreadyCheck) {
+    alert("The word is already registered!");
+    return;
+  }
+
+  let addWordInfo: objectKeyType<string> = {};
   for (let i = 0; i < modalList.length; i++) {
     addWordInfo[modalList[i]] = enteredWordInfo[i];
   }
@@ -137,6 +146,7 @@ const startAddProcess = async () => {
     margin-bottom: 24px;
 
     > li {
+      text-transform: capitalize;
       > span {
         display: block;
         color: $color-05;

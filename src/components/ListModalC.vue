@@ -44,7 +44,7 @@ defineComponent({
 const modal: Ref<HTMLDialogElement | null> = ref(null);
 
 /**
- * @description close modal
+ * close modal
  * @returns {void}
  */
 const closeModal = () => {
@@ -53,7 +53,7 @@ const closeModal = () => {
 };
 
 /**
- * @description submit new word info to server-side
+ * submit new word info to server-side
  * @returns {Promise}
  */
 const startRemoveProcess = async () => {

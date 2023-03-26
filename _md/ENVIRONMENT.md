@@ -1,5 +1,9 @@
 # Development Environment
 
+## Node
+
+16.17.0
+
 ## About Frontend and Backend Environment
 
 ### Frontend files

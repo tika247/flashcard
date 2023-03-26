@@ -61,7 +61,7 @@ const modalList: Array<string> = [
 let textareas: HTMLCollectionOf<HTMLTextAreaElement> | undefined = undefined;
 
 /**
- * @description reflect edit target word info into textareas
+ * reflect edit target word info into textareas
  * @returns {void}
  */
 const reflectTargetInfo = () => {
@@ -75,7 +75,7 @@ const reflectTargetInfo = () => {
 };
 
 /**
- * @description detect if overlay is clicked
+ * detect if overlay is clicked
  * @returns {void}
  */
 const clickOverlay = (e: Event) => {
@@ -88,7 +88,7 @@ const clickOverlay = (e: Event) => {
 };
 
 /**
- * @description close modal
+ * close modal
  * @returns {void}
  */
 const closeModal = () => {
@@ -97,7 +97,7 @@ const closeModal = () => {
 };
 
 /**
- * @description return new word info
+ * return new word info
  * @returns {object} wordInfo
  */
 const returnEditWordInfo = (): Array<string> | undefined => {
@@ -110,7 +110,7 @@ const returnEditWordInfo = (): Array<string> | undefined => {
 };
 
 /**
- * @description submit new word info to server-side
+ * submit new word info to server-side
  * @returns {Promise}
  */
 const startEditProcess = async () => {
@@ -140,7 +140,7 @@ const startEditProcess = async () => {
 };
 
 /**
- * @description onMounted
+ * onMounted
  */
 onMounted(() => {
   textareas = modal.value?.getElementsByTagName("textarea");

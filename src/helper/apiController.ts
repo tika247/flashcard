@@ -29,7 +29,7 @@ export const addWord = async (
 /**
  * @description put word before the page closed
  */
-export const putWord = async (putWordData: WordType) => {
+export const putWord = async (putWordData: Array<WordType>) => {
   await axios
     .post("/putWord/", putWordData)
     .then((res) => {

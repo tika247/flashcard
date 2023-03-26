@@ -44,7 +44,7 @@ const closeModal = () => {
 };
 
 /**
- * @description watch - when $globalProps changes
+ * watch - when $globalProps changes
  * @returns {void}
  */
 watch(

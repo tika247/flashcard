@@ -49,7 +49,7 @@ const props = defineProps({
 let isClicked: Ref<boolean> = ref(false);
 
 /**
- * @description get key value
+ * get key value
  * @param {object} obj
  * @returns {object}
  */
@@ -60,21 +60,21 @@ const getKeyValue = (obj: WordType) => {
 };
 
 /**
- * @description condition of panel reversed
+ * condition of panel reversed
  */
 const returnIsPanelReversed = computed(() => {
   return isClicked.value && !$globalProps.$isSelectMode ? true : false;
 });
 
 /**
- * @description switch isClicked
+ * switch isClicked
  */
 const switchIsClicked = () => {
   isClicked.value = !isClicked.value;
 };
 
 /**
- * @description open modal
+ * open modal
  * @param i
  */
 const openModal = () => {

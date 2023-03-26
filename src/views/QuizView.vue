@@ -70,7 +70,7 @@ defineComponent({
 let currentQuizMode: Ref<string | undefined> = ref("");
 
 /**
- * @description return subTitle text to switch according to mode
+ * return subTitle text to switch according to mode
  * @returns {string}
  */
 const returnSubTitle = computed(() => {
@@ -87,7 +87,7 @@ const returnSubTitle = computed(() => {
 });
 
 /**
- * @description update current
+ * update current
  * @param newMode
  */
 const updateCurrentQuizMode = (newMode: any) => {

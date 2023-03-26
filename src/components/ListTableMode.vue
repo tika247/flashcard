@@ -66,7 +66,7 @@ const returnIsSelectMode = computed((): boolean => {
 });
 
 /**
- * @description open modal
+ * open modal
  * @param i
  */
 const openModal = (i: number) => {

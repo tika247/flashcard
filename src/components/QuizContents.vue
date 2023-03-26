@@ -86,7 +86,7 @@ const props = defineProps({
 const currentQuizMode: Ref<string> = ref(props.mode) as Ref<string>;
 
 /**
- * @description emit currentQuizMode
+ * emit currentQuizMode
  */
 const emit = defineEmits(["eventUpdateMode"]);
 watch(currentQuizMode, () => {
@@ -94,7 +94,7 @@ watch(currentQuizMode, () => {
 });
 
 /**
- * @description decide data to show
+ * decide data to show
  */
 const returnCurrentWord = computed((): [WordType, number] | void => {
   let returnWord = null;
@@ -114,7 +114,7 @@ const returnCurrentWord = computed((): [WordType, number] | void => {
 });
 
 /**
- * @description return word in preview mode
+ * return word in preview mode
  */
 const returnPreviewWord = (): [WordType, number] | void => {
   let returnWord = null;
@@ -141,7 +141,7 @@ const returnPreviewWord = (): [WordType, number] | void => {
 };
 
 /**
- * @description return word in random mode
+ * return word in random mode
  */
 const returnRandomWord = (): [WordType, number] | void => {
   const index = Math.floor(Math.random() * $word.value.length);
@@ -149,26 +149,26 @@ const returnRandomWord = (): [WordType, number] | void => {
 };
 
 /**
- * @description current word
+ * current word
  */
 const currentWord = returnCurrentWord as ComputedRef<[WordType, number]>;
 
 /**
- * @description activate next button
+ * activate next button
  */
 const controllActiveBtn = (str: string) => {
   currentActiveBtn.value = str;
 };
 
 /**
- * @description return next-btn's active state
+ * return next-btn's active state
  */
 const returnNextBtnState = computed(() => {
   return currentActiveBtn.value ? false : true;
 });
 
 /**
- * @description go to next quiz
+ * go to next quiz
  */
 const goToNextQuiz = () => {
   if (!currentWord || !currentWord.value) {
@@ -181,7 +181,7 @@ const goToNextQuiz = () => {
 };
 
 /**
- * @description change current active btn
+ * change current active btn
  */
 const changeCurrentActiveBtn = () => {
   currentActiveBtn.value = currentWord.value[0].state
@@ -191,7 +191,7 @@ const changeCurrentActiveBtn = () => {
 changeCurrentActiveBtn();
 
 /**
- * @description watch currentWord changes, to reflect  onto an inicial btn state
+ * watch currentWord changes, to reflect  onto an inicial btn state
  * @todo In preview mode, reflect the state on a btn to designate the state
  */
 watch(currentWord, () => {
