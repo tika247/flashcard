@@ -109,15 +109,19 @@ const updateCurrentQuizMode = (newMode: any) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  > .quiz-panel-list {
+    display: flex;
+    gap: 0 80px;
+  }
 }
 
-.quiz-panel-list {
-  display: flex;
-  gap: 0 80px;
-}
 @include sp {
-  .quiz-panel-list {
-    gap: 0 24px;
+  .quiz-lyt {
+    padding: 40px 0;
+    > .quiz-panel-list {
+      flex-direction: column;
+      gap: 32px 0;
+    }
   }
 }
 </style>

@@ -36,6 +36,7 @@ defineProps({
 }
 @include sp {
   .hdg-02 {
+    margin-bottom: 40px;
     > h2 {
       font-size: $fontSize-01-sp;
     }

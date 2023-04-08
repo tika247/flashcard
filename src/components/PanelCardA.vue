@@ -54,4 +54,13 @@ defineProps({
     height: 100%;
   }
 }
+@include sp {
+  .panel {
+    button {
+      > span {
+        font-size: $fontSize-02-sp;
+      }
+    }
+  }
+}
 </style>

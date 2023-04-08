@@ -135,4 +135,9 @@ let modePanel: Ref<boolean> = ref(true);
     }
   }
 }
+@include sp {
+  .list-setting {
+    margin-bottom: 16px;
+  }
+}
 </style>

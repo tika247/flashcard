@@ -53,6 +53,7 @@ defineComponent({
     height: inherit;
     padding: 40px 0;
     gap: 40px 0;
+    gap: 24px 0;
     > h1 {
       font-size: $fontSize-01-sp;
     }

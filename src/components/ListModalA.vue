@@ -33,7 +33,6 @@ const modalList: Array<string> = [
   "japanese",
   "example",
   "note",
-  "state",
 ];
 
 // HTMLCollection of textareas
@@ -163,17 +162,6 @@ const startAddProcess = async () => {
         color: $color-03;
         padding: 8px;
       }
-
-      > span[data-itemName="state"],
-      > textarea[name="state"] {
-        clip: rect(0 0 0 0);
-        clip-path: inset(50%);
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        position: absolute;
-        white-space: nowrap;
-      }
     }
   }
 
@@ -203,9 +191,9 @@ const startAddProcess = async () => {
 }
 @include sp {
   .modal {
-    padding: $distance-01-sp 0;
+    padding: 24px 0;
     &__content {
-      padding: $distance-01-sp;
+      padding: 24px;
     }
   }
 }

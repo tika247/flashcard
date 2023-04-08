@@ -228,4 +228,18 @@ watch(currentWord, () => {
   gap: 0 40px;
   margin-top: $distance-02;
 }
+@include sp {
+  .quiz-contents {
+    margin-top: calc(-1 * 20px);
+  }
+  .quiz-item {
+    &__num {
+      font-size: $fontSize-04-sp;
+      margin-bottom: 24px;
+    }
+  }
+  .quiz-controller {
+    margin-top: 32px;
+  }
+}
 </style>

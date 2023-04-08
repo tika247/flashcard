@@ -99,4 +99,11 @@ const closeModal = () => {
     padding: 32px 16px 56px;
   }
 }
+@include sp {
+  .list-footer {
+    &.is-panel {
+      padding: 0 16px 56px;
+    }
+  }
+}
 </style>
