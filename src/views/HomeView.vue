@@ -3,22 +3,8 @@
     <h1>FLASH CARD APP</h1>
     <thunderA></thunderA>
     <ul class="home-panel-list">
-      <li class="panel">
-        <router-link to="/list">
-          List
-          <svg viewBox="0 0 304 304" class="panel__bg">
-            <use xlink:href="#thunderA"></use>
-          </svg>
-        </router-link>
-      </li>
-      <li class="panel">
-        <router-link to="/quiz">
-          Quiz
-          <svg viewBox="0 0 304 304" class="panel__bg">
-            <use xlink:href="#thunderA"></use>
-          </svg>
-        </router-link>
-      </li>
+      <panel-card-top :text="'List'" :link="'/list'"></panel-card-top>
+      <panel-card-top :text="'Quiz'" :link="'/quiz'"></panel-card-top>
     </ul>
   </div>
 </template>
@@ -26,11 +12,18 @@
 <script setup lang="ts">
 import { defineComponent } from "vue";
 import ThunderA from "../components/symbol/ThunderA.vue";
+import PanelCardTop from "../components/PanelCardTop.vue";
 
 defineComponent({
   name: "ThunderA",
   components: {
     ThunderA,
+  },
+});
+defineComponent({
+  name: "PanelCardTop",
+  components: {
+    PanelCardTop,
   },
 });
 </script>
@@ -43,48 +36,29 @@ defineComponent({
   justify-content: center;
   align-items: center;
   gap: $distance-01 0;
+  > h1 {
+    font-size: $fontSize-01;
+    color: #fff;
+    text-align: center;
+  }
+  > .home-panel-list {
+    display: flex;
+    justify-content: center;
+    gap: 0 80px;
+  }
 }
 
-h1 {
-  font-size: $fontSize-01;
-  color: #fff;
-  text-align: center;
-}
-
-.home-panel-list {
-  display: flex;
-  justify-content: center;
-  gap: 0 80px;
-
-  .panel {
-    a {
-      position: relative;
-      width: 320px;
-      height: 320px;
-      background-color: $color-01;
-      font-size: $fontSize-02;
-      color: #fff;
-      font-weight: 500;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: $shadow;
-      border-radius: 4px;
-      overflow: hidden;
-
-      transition: transform 0.3s ease-in-out;
-
-      @include hover {
-        transform: scale(1.05);
-      }
+@include sp {
+  .home-lyt {
+    height: inherit;
+    padding: 40px 0;
+    gap: 40px 0;
+    > h1 {
+      font-size: $fontSize-01-sp;
     }
-
-    &__bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+    > .home-panel-list {
+      flex-direction: column;
+      gap: 40px 0;
     }
   }
 }

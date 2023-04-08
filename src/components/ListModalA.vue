@@ -201,4 +201,12 @@ const startAddProcess = async () => {
     }
   }
 }
+@include sp {
+  .modal {
+    padding: $distance-01-sp 0;
+    &__content {
+      padding: $distance-01-sp;
+    }
+  }
+}
 </style>

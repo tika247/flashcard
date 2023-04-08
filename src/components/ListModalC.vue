@@ -108,4 +108,16 @@ const startRemoveProcess = async () => {
     gap: 0 32px;
   }
 }
+
+@include sp {
+  .modal {
+    padding: $distance-01-sp 0;
+    &__content {
+      padding: $distance-01-sp;
+    }
+    &__text {
+      font-size: $fontSize-03-sp;
+    }
+  }
+}
 </style>

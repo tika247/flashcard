@@ -28,6 +28,7 @@
       v-else
     ></quiz-contents>
   </div>
+  <link-home></link-home>
   <thunderB></thunderB>
 </template>
 
@@ -37,6 +38,7 @@ import ThunderB from "../components/symbol/ThunderB.vue";
 import PanelCardA from "../components/PanelCardA.vue";
 import HdgLevel02 from "../components/HdgLevel02.vue";
 import QuizContents from "../components/QuizContents.vue";
+import LinkHome from "../components/LinkHome.vue";
 
 defineComponent({
   name: "ThunderB",
@@ -63,6 +65,12 @@ defineComponent({
   name: "QuizContents",
   components: {
     QuizContents,
+  },
+});
+defineComponent({
+  name: "LinkHome",
+  components: {
+    LinkHome,
   },
 });
 
@@ -103,14 +111,13 @@ const updateCurrentQuizMode = (newMode: any) => {
   align-items: center;
 }
 
-h2 {
-  font-size: $fontSize-01;
-  color: #fff;
-  text-align: center;
-}
-
 .quiz-panel-list {
   display: flex;
   gap: 0 80px;
+}
+@include sp {
+  .quiz-panel-list {
+    gap: 0 24px;
+  }
 }
 </style>

@@ -67,4 +67,9 @@ defineProps({
     }
   }
 }
+@include sp {
+  .list-tableMode {
+    width: 1200px;
+  }
+}
 </style>

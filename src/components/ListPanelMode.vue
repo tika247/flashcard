@@ -1,6 +1,11 @@
 <template>
   <div class="lyt-swiper">
-    <swiper :slides-per-view="4" :space-between="50" :breakpoints="breakpoints">
+    <swiper
+      :slides-per-view="4"
+      :threshold="10"
+      :space-between="50"
+      :breakpoints="breakpoints"
+    >
       <swiper-slide v-for="(item, i) in $word" :key="item.word">
         <panel-card-b :data="item" :selfIndex="i"></panel-card-b>
       </swiper-slide>
@@ -39,8 +44,8 @@ defineComponent({
 const breakpoints = {
   // win>=320px
   320: {
-    slidesPerView: 2,
-    spaceBetween: 32,
+    slidesPerView: 1,
+    spaceBetween: 16,
   },
   // win>=769px
   769: {

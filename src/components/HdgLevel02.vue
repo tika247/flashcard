@@ -34,4 +34,14 @@ defineProps({
     color: $color-04;
   }
 }
+@include sp {
+  .hdg-02 {
+    > h2 {
+      font-size: $fontSize-01-sp;
+    }
+    > span {
+      font-size: $fontSize-06-sp;
+    }
+  }
+}
 </style>

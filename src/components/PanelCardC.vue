@@ -122,20 +122,19 @@ const switchIsClicked = () => {
     backdrop-filter: blur(5px);
     overflow-y: scroll;
 
-    // TODO: cannot scroll with mouse drag if ::-webkit-scrollbar
-    // &::-webkit-scrollbar {
-    //   width: 8px;
-    //   transform: scaleY(0.8);
-    // }
+    &::-webkit-scrollbar {
+      width: 8px;
+      transform: scaleY(0.8);
+    }
 
-    // &::-webkit-scrollbar-track {
-    //   background-color: $color-01;
-    // }
+    &::-webkit-scrollbar-track {
+      background-color: $color-01;
+    }
 
-    // &::-webkit-scrollbar-thumb {
-    //   background-color: $color-04;
-    //   border-radius: 5em;
-    // }
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-04;
+      border-radius: 5em;
+    }
   }
 
   &__bg {
@@ -184,6 +183,13 @@ const switchIsClicked = () => {
       color: $color-05;
       font-size: $fontSize-05;
       font-weight: normal;
+    }
+  }
+}
+@include sp {
+  .panel {
+    &__front {
+      font-size: $fontSize-02-sp;
     }
   }
 }

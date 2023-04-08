@@ -28,7 +28,9 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
-.list-content {
-  min-width: 100%;
+@include sp {
+  .list-contents {
+    overflow-x: scroll;
+  }
 }
 </style>

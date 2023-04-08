@@ -36,6 +36,7 @@
     <list-contents :mode="modePanel"></list-contents>
   </div>
   <list-footer :mode="modePanel"></list-footer>
+  <link-home></link-home>
   <thunderB></thunderB>
 </template>
 
@@ -45,6 +46,7 @@ import ListContents from "../components/ListContents.vue";
 import HdgLevel02 from "../components/HdgLevel02.vue";
 import ListFooter from "../components/ListFooter.vue";
 import ThunderB from "../components/symbol/ThunderB.vue";
+import LinkHome from "../components/LinkHome.vue";
 const $word = inject("$word") as Ref<Array<WordType>>;
 
 defineComponent({
@@ -69,6 +71,12 @@ defineComponent({
   name: "HdgLevel02",
   components: {
     HdgLevel02,
+  },
+});
+defineComponent({
+  name: "LinkHome",
+  components: {
+    LinkHome,
   },
 });
 
