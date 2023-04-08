@@ -6,8 +6,8 @@
       </caption>
       <colgroup>
         <col
-          v-for="item in returnColWidth"
-          :key="item"
+          v-for="(item, index) in returnColWidth"
+          :key="index"
           :style="`width: ${item}%;`"
         />
       </colgroup>
@@ -111,6 +111,7 @@ class DragController implements DragControllerType {
     index: number | null;
     target: HTMLDivElement | null;
     startPoint: number | null;
+    startPercentage: Array<number>;
   };
   dragTargetLength: number | null;
 
@@ -128,12 +129,13 @@ class DragController implements DragControllerType {
       target: null,
       index: null,
       startPoint: null,
+      startPercentage: colWidth.value,
     };
     this.dragTargetLength = null;
   }
   async init() {
     await this.setting();
-    this.addEvent();
+    this.dragControll();
   }
   async setting() {
     await this.addDragArea();
@@ -151,13 +153,10 @@ class DragController implements DragControllerType {
       }
     });
   }
-  addEvent() {
-    // for (const el of this.dragArea) {
-    // }
-    this.dragDiv();
-  }
-  dragDiv() {
-    //el: HTMLDivElement
+  /**
+   * drag
+   */
+  dragControll() {
     if (!this.root) return;
     document.addEventListener(
       "dragover",
@@ -172,61 +171,79 @@ class DragController implements DragControllerType {
         target instanceof HTMLDivElement &&
         target.classList.contains(this.klass.dragArea)
       ) {
-        target;
         this.dragging["target"] = target;
         this.dragging["index"] = this.dragArea.findIndex(
           (item) => item === this.dragging["target"]
         );
-        this.dragging["startPoint"] = this.root.clientWidth;
+        this.dragging["trWidth"] = this.root.clientWidth;
         this.dragging["startPoint"] = e.pageX;
+        this.dragging["startPercentage"] = colWidth.value;
       }
     });
     this.root.addEventListener("drag", (e: DragEvent) => {
       if (
+        !e.target ||
         this.dragging["target"] !== e.target ||
-        !this.dragging["index"] ||
+        typeof this.dragging["index"] !== "number" ||
         !this.dragging["startPoint"]
       )
         return;
+
+      if (
+        !(e.target instanceof HTMLElement) ||
+        !e.target.parentNode ||
+        !(e.target.parentNode instanceof HTMLElement)
+      )
+        return;
+
       const diff = this.dragging["startPoint"] - e.pageX;
       const percentage = (diff / this.dragging["trWidth"]) * 100;
       const sign = Math.sign(percentage);
       if (sign === 0) return;
       const swing = Math.abs(percentage);
-      // ↓ TODO: 右にドラッグする→右の要素が縮む
-      // ↓ TODO: 左にドラッグする→左の要素が縮む
       colWidth.value = colWidth.value.map((num: number, i: number) => {
-        if (!this.dragTargetLength) return num;
+        if (
+          !this.dragTargetLength ||
+          typeof this.dragging["index"] !== "number"
+        )
+          return num;
 
         let newNum = 0;
+
+        // drag to left
         if (sign === 1) {
-          if (i === this.dragging["index"] || !this.dragging["index"]) {
-            newNum = num - swing;
-          } else if (i < this.dragging["index"]) {
-            newNum =
-              num + (swing / this.dragTargetLength - this.dragging["index"]);
-          } else {
+          if (this.checkMinWidth(this.dragTarget[this.dragging["index"]])) {
+            return num;
+          }
+          if (i === this.dragging["index"]) {
+            newNum = this.dragging["startPercentage"][i] - swing;
+          }
+          if (i === this.dragging["index"] + 1) {
+            newNum = this.dragging["startPercentage"][i] + swing;
+          }
+          if (newNum === 0) {
             newNum = num;
           }
         }
 
+        // drag to right
         if (sign === -1) {
-          if (i === this.dragging["index"] || !this.dragging["index"]) {
-            newNum = num + swing;
-          } else if (i > this.dragging["index"]) {
-            newNum =
-              num - (swing / this.dragTargetLength - this.dragging["index"]);
-          } else {
+          if (this.checkMinWidth(this.dragTarget[this.dragging["index"] + 1])) {
+            return num;
+          }
+          if (i === this.dragging["index"]) {
+            newNum = this.dragging["startPercentage"][i] + swing;
+          }
+          if (i === this.dragging["index"] + 1) {
+            newNum = this.dragging["startPercentage"][i] - swing;
+          }
+          if (newNum === 0) {
             newNum = num;
           }
         }
 
-        // TODO: ↓をなくしたときのエラーを解消する
-        // newNum = num;
         return newNum;
       });
-      // ↑ TODO: 右にドラッグする→右の要素が縮む
-      // ↑ TODO: 左にドラッグする→左の要素が縮む
     });
 
     this.root.addEventListener("dragend", (e: DragEvent) => {
@@ -236,6 +253,13 @@ class DragController implements DragControllerType {
       this.dragging["startPoint"] = null;
     });
   }
+  /**
+   * check if width is lower than min
+   * @param {NodeListOf<HTMLTableElement>} target
+   */
+  checkMinWidth = (target: HTMLTableElement) => {
+    return target.clientWidth < 100 ? true : false;
+  };
 }
 </script>
 
@@ -258,7 +282,7 @@ class DragController implements DragControllerType {
       > th,
       > td {
         position: relative;
-        padding: 12px 24px;
+        padding: 20px 24px;
 
         &:not(:first-child)::before {
           width: 1px;
