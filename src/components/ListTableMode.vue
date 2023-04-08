@@ -282,7 +282,7 @@ class DragController implements DragControllerType {
       > th,
       > td {
         position: relative;
-        padding: 20px 24px;
+        padding: 12px 24px;
 
         &:not(:first-child)::before {
           width: 1px;

@@ -1,12 +1,6 @@
 <template>
   <div class="lyt-swiper">
-    <swiper
-      :slides-per-view="4"
-      :space-between="50"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
-      :breakpoints="breakpoints"
-    >
+    <swiper :slides-per-view="4" :space-between="50" :breakpoints="breakpoints">
       <swiper-slide v-for="(item, i) in $word" :key="item.word">
         <panel-card-b :data="item" :selfIndex="i"></panel-card-b>
       </swiper-slide>

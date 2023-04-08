@@ -28,8 +28,8 @@ defineProps({
 </script>
 
 <style lang="scss">
-th,
-td {
+.list-tableMode th,
+.list-tableMode td {
   position: relative;
   padding: 12px 24px;
 
@@ -45,11 +45,11 @@ td {
   }
 
   > .v-dragArea {
-    width: 12px;
+    width: 20px;
     height: 100%;
     position: absolute;
     top: 0;
-    right: -8px;
+    right: -12px;
     cursor: col-resize;
     z-index: 10;
   }

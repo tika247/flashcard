@@ -108,6 +108,7 @@ const switchIsClicked = () => {
     font-size: $fontSize-02;
     color: #fff;
     font-weight: 500;
+    word-break: break-all;
     &::-webkit-scrollbar {
       display: none;
     }
