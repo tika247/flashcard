@@ -1,10 +1,9 @@
 .DS_Store
 node_modules
+/dist
 /public
-/_design
 /_memo
-/_design
-/_md
+**/_design/**/*
 
 # local env files
 .env.local
