@@ -1,14 +1,10 @@
 ## next
 
-- make it possible to drag and widen areas in 
+- A-Z sort for api.json 
 - validate if enterd word is registered already
 - when panel reversed, not be able to scroll with ↑↓ key.
-- using [Service Worker](https://laboradian.com/create-offline-site-using-sw/), set it work even in offline
 
-## todo
+## consider
 
 - API authentication with `Auth0`
-
-## check
-
-- check if `URL` used as param at HTTP-Method such as `get` or `post` shoud be encrypted for security perspective?
+- using [Service Worker](https://laboradian.com/create-offline-site-using-sw/), set it work even in offline

@@ -4,7 +4,8 @@ node_modules
 /public
 /_design
 /_memo
-
+/_design
+/_md
 
 # local env files
 .env.local
